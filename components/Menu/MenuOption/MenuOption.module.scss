@@ -1,0 +1,27 @@
+@import "../../../styles/colors";
+.menuOption {
+	cursor: pointer;
+	min-width: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	font-weight: 700;
+}
+.title {
+	color: $color-text-tertiary;
+	font-size: 1rem;
+	max-width: 50px;
+}
+.icon {
+	fill: $color-text-tertiary;
+	width: 50px;
+}
+.icon.active {
+	fill: $color-primary;
+	width: 1.2 * 50px;
+}
+.title.active {
+	color: $color-primary;
+	font-size: 1.2rem;
+}

@@ -1,0 +1,14 @@
+@import "../../styles/colors";
+.heading {
+	color: $color-text-primary;
+	font-size: 72px;
+	display: block;
+}
+.underline::after {
+	content: "";
+	display: block;
+	width: 60%;
+	height: 10px;
+	background-color: $color-primary;
+	margin: auto;
+}
