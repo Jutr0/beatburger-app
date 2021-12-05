@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import MainHeading from "../MainHeading";
 
+import cheese from "../../assets/images/cheese.png";
 import burger from "../../assets/images/burger.png";
 import logo from "../../assets/images/logo_465x320.png";
 import bg from "../../assets/images/table.jpg";
@@ -11,7 +12,7 @@ import styles from "./LandingScreen.module.scss";
 
 function LandingScreen() {
 	return (
-		<Row>
+		<>
 			<div
 				className={styles.background}
 				style={{ backgroundImage: `url('${bg.src}')` }}
@@ -24,7 +25,11 @@ function LandingScreen() {
 					<Image src={burger} layout="responsive" alt="Pyszny burger" />
 				</div>
 			</div>
-		</Row>
+			<div
+				className={styles.cheese}
+				style={{ backgroundImage: `url('${cheese.src}')` }}
+			/>
+		</>
 	);
 }
 

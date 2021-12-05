@@ -1,0 +1,27 @@
+.additionalProduct {
+	border-radius: 4px;
+	padding: 16px;
+	height: 68px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 0.3px;
+	margin: 15px 7px 0;
+	cursor: pointer;
+	color: #ce0a06;
+	background-color: #f7f4f3;
+	text-transform: uppercase;
+	display: flex;
+	align-items: center;
+}
+.iconContainer {
+	min-width: 36px;
+	height: 36px;
+	background-color: #ce0a06;
+	margin-right: 10px;
+	line-height: 37px;
+	box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+	border-radius: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}

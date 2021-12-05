@@ -1,0 +1,138 @@
+@import "../../../styles/colors";
+
+.container {
+	font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+	width: 100%;
+	min-height: 239px;
+	background: $color-card;
+	padding-left: 36px;
+	margin-bottom: 24px;
+	position: relative;
+	display: flex;
+	align-items: stretch;
+	justify-content: space-between;
+	border-radius: 4px;
+	color: $color-text-primary;
+}
+.productDescription {
+	position: relative;
+	padding: 25px 0;
+	h1 {
+		margin: 0;
+		margin-bottom: 16px;
+	}
+}
+.purchaseDescription {
+	width: 205px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	justify-content: space-evenly;
+	border-left: 1px solid $color-background;
+	#svg {
+		fill: $color-background;
+	}
+}
+.price {
+	display: flex;
+	font-weight: 700;
+	.full {
+		font-size: 48px;
+		line-height: 1.5;
+		position: relative;
+	}
+	.point {
+		font-size: 24px;
+		position: relative;
+		top: 14px;
+		left: 4px;
+		text-decoration: underline;
+	}
+}
+
+.personalise {
+	color: #ce0a06;
+	font-size: 14px;
+	line-height: 20px;
+	text-decoration: underline;
+	cursor: pointer;
+	font-weight: 500;
+}
+.products {
+	display: flex;
+	.mainProduct {
+		min-width: 138px;
+		height: 138px;
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
+		margin-right: 24px;
+	}
+	.productItems {
+		display: flex;
+		align-items: flex-start;
+		flex-wrap: wrap;
+	}
+}
+.ingridientsContainer {
+	margin-top: 32px;
+	min-height: 75px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	border-top: 1px solid $color-primary;
+	.showIngridientsButton {
+		color: $color-text-primary;
+		text-transform: none;
+		font-size: 20px;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	.container {
+		flex-direction: column;
+		padding: 23px;
+		padding-bottom: 0;
+		.productDescription {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			h1 {
+				align-self: center;
+				font-size: 32px;
+				order: 2;
+				display: inline-block;
+			}
+		}
+		.products {
+			order: -1;
+			justify-content: center;
+			.mainProduct {
+				margin: 0 0 8px 0;
+				height: 232px;
+				width: 100%;
+				background-size: contain;
+			}
+		}
+		.purchaseDescription {
+			display: flex;
+			border: none;
+			width: 100%;
+
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			.mobilePrice {
+				display: flex;
+				justify-content: space-between;
+				width: 90%;
+				margin-bottom: 8px;
+				.price {
+					color: $color-primary;
+				}
+			}
+		}
+	}
+}

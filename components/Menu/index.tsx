@@ -1,25 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row } from "react-grid-system";
 
 import MenuOption from "./MenuOption";
 import Heading from "../Heading";
 
 import { OPTIONS } from "../../assets/utils/menuOpts";
-import Cheese from "../../assets/images/cheese.svg";
+import cheese from "../../assets/images/cheese.png";
 import styles from "./Menu.module.scss";
 
 function Menu() {
+	const [pickedOption, setPickedOption] = useState<string>("burgery");
+
 	return (
 		<Row className={styles.container}>
-			<Cheese viewBox="100 0 1100  300" className={styles.cheese} />
+			{/* <div
+				className={styles.cheese}
+				style={{ backgroundImage: `url('${cheese.src}')` }}
+			/> */}
 			<Heading underline>MENU</Heading>
 			<div className={styles.menuOptionsContainer}>
-				{OPTIONS.map((option, index) => (
+				{OPTIONS.map((option) => (
 					<MenuOption
 						key={option.title}
-						isActive={!index}
+						isActive={option.title.toLowerCase() === pickedOption.toLowerCase()}
 						Icon={option.icon}
-						onClick={() => {}}
+						onClick={() => {
+							setPickedOption(option.title);
+						}}
 						title={option.title}
 					/>
 				))}

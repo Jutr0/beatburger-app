@@ -9,11 +9,13 @@
 	font-weight: 700;
 }
 .title {
+	transition: all 0.2s linear;
 	color: $color-text-tertiary;
 	font-size: 1rem;
-	max-width: 50px;
+	max-width: 30vw;
 }
 .icon {
+	transition: all 0.2s linear;
 	fill: $color-text-tertiary;
 	width: 50px;
 }
