@@ -1,27 +1,35 @@
 {
-  "name": "beatburger-app",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@svgr/webpack": "^6.0.0",
-    "firebase": "^9.5.0",
-    "formik": "^2.2.9",
-    "next": "12.0.4",
-    "node-sass": "^6.0.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-grid-system": "^8.0.1"
-  },
-  "devDependencies": {
-    "@types/node": "16.11.10",
-    "@types/react": "17.0.37",
-    "eslint": "7.32.0",
-    "eslint-config-next": "12.0.4",
-    "typescript": "4.5.2"
-  }
+	"name": "firebase-deploy",
+	"version": "0.1.0",
+	"main": "function.js",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint",
+		"export": "next export"
+	},
+	"dependencies": {
+		"@reduxjs/toolkit": "^1.6.2",
+		"@svgr/webpack": "^6.0.0",
+		"@types/react-redux": "^7.1.20",
+		"firebase": "^9.6.0",
+		"firebase-admin": "^10.0.0",
+		"firebase-functions": "^3.16.0",
+		"formik": "^2.2.9",
+		"next": "12.0.4",
+		"node-sass": "^6.0.1",
+		"react": "17.0.2",
+		"react-dom": "17.0.2",
+		"react-grid-system": "^8.0.1",
+		"react-redux": "^7.2.6"
+	},
+	"devDependencies": {
+		"@types/node": "16.11.10",
+		"@types/react": "17.0.37",
+		"eslint": "7.32.0",
+		"eslint-config-next": "12.0.4",
+		"typescript": "4.5.2"
+	}
 }

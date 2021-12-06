@@ -1,3 +1,5 @@
+@import "../../../../styles/colors";
+
 .productItem {
 	width: 80px;
 	margin: 0 6px 6px;
@@ -12,11 +14,11 @@
 			position: absolute;
 			top: 7px;
 			left: 0;
-			background-color: #fff;
+			background-color: $color-primary;
 			line-height: 24px;
 			font-weight: 700;
 			font-size: 13px;
-			color: #1c1210;
+			color: $color-background;
 			text-align: center;
 			height: 24px;
 			width: 24px;
@@ -30,13 +32,7 @@
 		padding: 0 5px;
 		word-break: break-word;
 		word-wrap: break-word;
-		color: #868686;
+		color: $color-text-secondary;
 		text-align: center;
 	}
-	&:hover {
-		box-shadow: 0 2px 2px 0 rgba(128, 87, 77, 0.05),
-			0 3px 10px 0 rgba(128, 87, 77, 0.1);
-		background-color: #f7f4f3;
-	}
-	cursor: pointer;
 }

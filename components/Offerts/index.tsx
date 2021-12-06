@@ -16,7 +16,26 @@ function Offerts() {
 						key="1"
 						title="Bacon Burger"
 						thumbnail={burger.src}
-						products={[]}
+						products={[
+							{
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Poke/15_04/v2_poke_bowl_1_web.png",
+								quantity: 1,
+								title: "SWEET CHILLI POKÉ bowl",
+							},
+							{
+								quantity: 1,
+								title: "Ryż & chrupiące bites",
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Poke/items/Bites_skladniki_ryz_web.png",
+							},
+							{
+								quantity: 1,
+								title: "bez napoju",
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/bez_wyboru.png",
+							},
+						]}
 						price={{ full: 26, point: 95 }}
 					/>
 				))}
@@ -26,3 +45,23 @@ function Offerts() {
 }
 
 export default Offerts;
+// products={[
+// 	{
+// 		thumbnail:
+// 			'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Poke/15_04/v2_poke_bowl_1_web.png',
+// 		quantity: 1,
+// 		title: 'SWEET CHILLI POKÉ bowl',
+// 	},
+// 	{
+// 		quantity: 1,
+// 		title: 'Ryż & chrupiące bites',
+// 		thumbnail:
+// 			'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Poke/items/Bites_skladniki_ryz_web.png',
+// 	},
+// 	{
+// 		quantity: 1,
+// 		title: 'bez napoju',
+// 		thumbnail:
+// 			'https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/bez_wyboru.png',
+// 	},
+// ]}

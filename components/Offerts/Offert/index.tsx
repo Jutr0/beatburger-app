@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
+import { Hidden, Visible } from "react-grid-system";
 
-import AddIcon from "./plus-svgrepo-com.svg";
 import Button from "../../Button";
 import AdditionalProduct from "./AdditionalProduct";
-import styles from "./Offert.module.scss";
 import Product, { IProduct } from "./Product";
-import { Hidden, Visible } from "react-grid-system";
+
+import AddIcon from "./plus-svgrepo-com.svg";
+import styles from "./Offert.module.scss";
 
 type IProps = {
 	title: string;
@@ -27,6 +28,12 @@ function Offert({
 	price,
 	additionalProduct,
 }: IProps) {
+	const [isProductsShown, setIsProductsShown] = useState(false);
+
+	const toggleProducts = () => {
+		setIsProductsShown((last) => !last);
+	};
+
 	return (
 		<section className={styles.container}>
 			<div className={styles.productDescription}>
@@ -73,9 +80,31 @@ function Offert({
 			</div>
 			<Visible sm xs>
 				<div className={styles.ingridientsContainer}>
-					<Button type="text" className={styles.showIngridientsButton}>
+					<Button
+						type="text"
+						className={styles.showIngridientsButton}
+						onClick={() => toggleProducts()}
+					>
 						Zobacz składniki
 					</Button>
+					<div
+						className={`${styles.ingridients} ${
+							isProductsShown && styles.active
+						}`}
+					>
+						{products &&
+							products.map(({ title, thumbnail, quantity }) => (
+								<Product
+									key={title}
+									title={title}
+									thumbnail={thumbnail}
+									quantity={quantity}
+								/>
+							))}
+						{additionalProduct && (
+							<AdditionalProduct title={additionalProduct.title} />
+						)}
+					</div>
 				</div>
 			</Visible>
 		</section>
