@@ -1,11 +1,38 @@
-export type IOrder = {
+export type IOrder = ICart & {
 	client: IClient;
+	paymentMethod: IPaymentMethod;
+	deliveryMethod: IDeliveryMethod;
 };
 
-export type IOffert = {};
+export type ICart = {
+	sumPrice: IPrice;
+	orders: IMinOffert[];
+};
+
+export type IPaymentMethod = "online" | "card" | "cash";
+export type IDeliveryMethod = "delivery" | "inRestaurant" | "pickup";
+
+export type IPrice = {
+	full: number;
+	point: number;
+};
+
+export type IMinOffert = {
+	name: string;
+	price: IPrice;
+	additionalProducts?: [IProduct & IPrice];
+	quantity?: number;
+};
+
+export type IOffert = IMinOffert & {
+	thumbnail: string;
+	products: IProduct[];
+};
 
 export type IProduct = {
 	name: string;
+	thumbnail: string;
+	quantity: number;
 };
 
 export type IClient = {

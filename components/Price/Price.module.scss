@@ -1,0 +1,35 @@
+@import "../../styles/colors";
+.price {
+	display: flex;
+	font-weight: 700;
+	align-items: flex-end;
+	.full {
+		font-size: 48px;
+		line-height: 1;
+		position: relative;
+	}
+	.point {
+		font-size: 24px;
+		position: relative;
+		top: -14px;
+		left: 4px;
+		text-decoration: underline;
+	}
+	.currency {
+		margin-left: 8px;
+		font-size: 24px;
+	}
+}
+@media screen and (max-width: 767px) {
+	.price {
+		color: $color-primary;
+		.full {
+			font-size: 36px;
+		}
+		.point {
+			font-size: 18px;
+
+			text-decoration: underline;
+		}
+	}
+}
