@@ -1,0 +1,39 @@
+@import "../../../styles/colors";
+
+.container {
+	padding: 16px;
+	width: 80vw;
+	max-width: 1000px;
+	background-color: $color-background;
+	border: 1px solid $color-card;
+	color: $color-text-primary;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+	h1 {
+		text-transform: uppercase;
+		text-align: center;
+		font-size: 28px;
+	}
+}
+.products {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.mealSize {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+.pickOne {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}

@@ -1,0 +1,41 @@
+@import "../../styles/colors";
+
+.input {
+	background-color: $color-card;
+	width: 90%;
+	max-width: 300px;
+	padding: 16px;
+	height: 64px;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	font-size: 24px;
+	margin: 8px 0;
+	cursor: pointer;
+	.marker {
+		width: 28px;
+		height: 28px;
+		background-color: $color-background;
+		margin-right: 16px;
+		border-radius: 50%;
+		position: relative;
+	}
+	.marker::before {
+		transition: all 0.2s;
+		content: "";
+		width: 0px;
+		height: 0px;
+		background-color: $color-primary;
+		display: block;
+		border-radius: 50%;
+		top: 14px;
+		position: absolute;
+		left: 14px;
+	}
+	.active.marker::before {
+		width: 20px;
+		height: 20px;
+		top: 4px;
+		left: 4px;
+	}
+}
