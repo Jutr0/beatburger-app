@@ -19,3 +19,16 @@ a {
 * {
 	box-sizing: border-box;
 }
+#modal-root {
+	position: fixed;
+	width: 100%;
+	max-height: 100vh;
+	top: 0;
+	left: 0;
+	display: flex;
+	justify-content: center;
+	overflow-y: scroll;
+}
+body.modal-open {
+	overflow: hidden;
+}

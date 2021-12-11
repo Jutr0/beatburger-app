@@ -3,13 +3,12 @@ import { Hidden, Visible } from "react-grid-system";
 
 import Button from "../../Button";
 import AdditionalProduct from "./AdditionalProduct";
-import Product, { IProduct } from "./Product";
+import Product from "./Product";
 
 import AddIcon from "./plus-svgrepo-com.svg";
 import styles from "./Offert.module.scss";
 import { IOffert } from "../../../assets/types/orders";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { addToCart } from "../../../redux/slices/cartSlice";
 import Price from "../../Price";
 import Modal from "../../Modal";
 import PickProducts from "../PickProducts";
@@ -116,7 +115,12 @@ function Offert({
 					</div>
 				</div>
 			</Visible>
-			<Modal show={isModalShown}>
+			<Modal
+				show={isModalShown}
+				onClose={() => {
+					setIsModalShown(false);
+				}}
+			>
 				<PickProducts type="zestaw" />
 			</Modal>
 		</section>

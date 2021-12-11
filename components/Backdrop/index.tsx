@@ -6,21 +6,26 @@ import styles from "./Backdrop.module.scss";
 type IProps = React.PropsWithChildren<{
 	show: boolean;
 	onClose?: Function;
+	closeOnBackdropClick?: boolean;
 }>;
 
-function Backdrop({ show, onClose, children }: IProps) {
-	const [isBrowser, setIsBrowser] = useState(false);
+function Backdrop({ show, onClose, children, closeOnBackdropClick }: IProps) {
+	// const [isBrowser, setIsBrowser] = useState(false);
 
-	useEffect(() => {
-		setIsBrowser(true);
-	}, []);
+	// useEffect(() => {
+	// 	setIsBrowser(true);
+	// }, []);
 
-	return isBrowser && show
-		? createPortal(
-				<div className={styles.backdrop}>{children}</div>,
-				document.getElementById("modal-root") as Element
-		  )
-		: null;
+	return show ? (
+		<div
+			onClick={() => {
+				closeOnBackdropClick && onClose && onClose();
+			}}
+			className={styles.backdrop}
+		>
+			{children}
+		</div>
+	) : null;
 }
 
 export default Backdrop;

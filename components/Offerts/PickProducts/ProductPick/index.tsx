@@ -3,6 +3,7 @@ import QuantityIndicator from "../../../QuantityIndicator";
 import Image from "next/image";
 
 import styles from "./ProductPick.module.scss";
+import { IMealSize } from "../../../../assets/types/addons";
 
 type IProps = {
 	thumbnail: string;
@@ -11,6 +12,10 @@ type IProps = {
 	type?: "one" | "many";
 	isChecked?: boolean;
 	onClick?: Function;
+	onIncrement?: Function;
+	onDecrement?: Function;
+	leftNumber?: number;
+	size?: IMealSize;
 };
 
 function ProductPick({
@@ -20,16 +25,26 @@ function ProductPick({
 	type = "many",
 	isChecked,
 	onClick,
+	onDecrement,
+	onIncrement,
+	leftNumber = 1,
 }: IProps) {
 	const [quantity, setQuantity] = useState(0);
 
+	useEffect(() => {
+		type === "one" && setQuantity(0);
+	}, [type]);
+
 	const increment = () => {
 		if (quantity === maxNumber) return;
+		if (leftNumber === 0) return;
+		onIncrement && onIncrement();
 		setQuantity((quantity) => quantity + 1);
 	};
 
 	const decrement = () => {
 		if (quantity === 0) return;
+		onDecrement && onDecrement();
 		setQuantity((quantity) => quantity - 1);
 	};
 
@@ -38,7 +53,7 @@ function ProductPick({
 			className={`${styles.container} ${
 				type === "one" && isChecked ? styles.active : ""
 			}`}
-			onClick={(_) => onClick && onClick()}
+			onClick={() => onClick && onClick()}
 		>
 			<QuantityIndicator quantity={quantity} />
 			<div className={styles.thumbnail}>

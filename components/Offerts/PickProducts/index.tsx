@@ -1,6 +1,15 @@
 import React, { useState } from "react";
 
 import product from "../../../assets/images/bekon.png";
+import { IMealSize, ISecondMeal } from "../../../assets/types/addons";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import {
+	changeDrinkNumber,
+	changeSecondMealNumber,
+	setDrink,
+	setSecondMeal,
+	setSize,
+} from "../../../redux/slices/addonSlice";
 import InputCheck from "../../InputCheck";
 
 import styles from "./PickProducts.module.scss";
@@ -11,11 +20,18 @@ type IProps = {
 };
 
 function PickProducts({ type }: IProps) {
-	const [pickedSize, setPickedSize] = useState<"beat" | "beater" | "beatest">();
-	const [pickedSecondMeal, setPickedSecondMeal] = useState<
-		"salatka" | "frytki" | "bataty"
-	>();
-	const [pickedDrink, setPickedDrink] = useState<string>();
+	const dispatch = useAppDispatch();
+	const addons = useAppSelector((state) => state.addons);
+
+	const maxPickedSecondMeal = 2;
+	const maxPickedDrinkNumber = 2;
+
+	const onPickSecondMeal = (name: ISecondMeal) => {
+		if (addons.size !== "beatest") {
+			dispatch(setSecondMeal(name));
+		}
+		console.log(addons);
+	};
 
 	return (
 		<div className={styles.container}>
@@ -26,74 +42,102 @@ function PickProducts({ type }: IProps) {
 						<InputCheck
 							value="BEAT"
 							onClick={() => {
-								setPickedSize("beat");
+								dispatch(setSize("beat"));
 							}}
-							isChecked={pickedSize === "beat"}
+							isChecked={addons.size === "beat"}
 							style={{ fontWeight: 200 }}
 						/>
 						<InputCheck
 							value="BEATER"
 							onClick={() => {
-								setPickedSize("beater");
+								dispatch(setSize("beater"));
 							}}
-							isChecked={pickedSize === "beater"}
+							isChecked={addons.size === "beater"}
 							style={{ fontWeight: 500 }}
 						/>
 						<InputCheck
 							value="BEATEST"
 							onClick={() => {
-								setPickedSize("beatest");
+								dispatch(setSize("beatest"));
 							}}
-							isChecked={pickedSize === "beatest"}
+							isChecked={addons.size === "beatest"}
 							style={{ fontWeight: 700 }}
 						/>
 					</div>
 					<div className={styles.pickOne}>
-						<h1>Wybierz frytki lub sałatkę</h1>{" "}
+						<h1>Wybierz frytki lub sałatkę</h1>
 						<div className={styles.products}>
 							<ProductPick
 								thumbnail={product.src}
-								isChecked={pickedSecondMeal === "frytki"}
+								isChecked={addons.secondMeal === "fries"}
 								name="Fytki"
-								maxNumber={1}
+								maxNumber={maxPickedSecondMeal}
+								leftNumber={maxPickedSecondMeal - addons.pickedSecondMealNumber}
 								onClick={() => {
-									setPickedSecondMeal("frytki");
+									onPickSecondMeal("fries");
 								}}
-								type="one"
+								onIncrement={() => {
+									dispatch(changeSecondMealNumber(1));
+								}}
+								onDecrement={() => {
+									dispatch(changeSecondMealNumber(-1));
+								}}
+								type={addons.size === "beatest" ? "many" : "one"}
 							/>
 							<ProductPick
 								thumbnail={product.src}
-								isChecked={pickedSecondMeal === "salatka"}
+								isChecked={addons.secondMeal === "salad"}
 								name="Sałatka"
-								type="one"
-								maxNumber={1}
+								type={addons.size === "beatest" ? "many" : "one"}
+								maxNumber={maxPickedSecondMeal}
 								onClick={() => {
-									setPickedSecondMeal("salatka");
+									onPickSecondMeal("salad");
+								}}
+								leftNumber={maxPickedSecondMeal - addons.pickedSecondMealNumber}
+								onIncrement={() => {
+									dispatch(changeSecondMealNumber(1));
+								}}
+								onDecrement={() => {
+									dispatch(changeSecondMealNumber(-1));
 								}}
 							/>
 						</div>
 					</div>
 					<div className={styles.pickOne}>
-						<h1>Wybierz Napój</h1>{" "}
+						<h1>Wybierz Napój</h1>
 						<div className={styles.products}>
 							<ProductPick
+								leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}
 								thumbnail={product.src}
-								isChecked={pickedDrink === "coca-cola"}
+								isChecked={addons.drink === "coca-cola"}
 								name="Coca-Cola"
-								maxNumber={1}
+								maxNumber={maxPickedDrinkNumber}
 								onClick={() => {
-									setPickedDrink("coca-cola");
+									dispatch(setDrink("coca-cola"));
 								}}
-								type="one"
+								type={addons.size === "beatest" ? "many" : "one"}
+								onIncrement={() => {
+									dispatch(changeDrinkNumber(1));
+								}}
+								onDecrement={() => {
+									dispatch(changeDrinkNumber(-1));
+								}}
 							/>
 							<ProductPick
+								leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}
 								thumbnail={product.src}
-								isChecked={pickedDrink === "fanta"}
+								isChecked={addons.drink === "fanta"}
 								name="Fanta"
-								type="one"
-								maxNumber={1}
+								type={addons.size === "beatest" ? "many" : "one"}
+								maxNumber={maxPickedDrinkNumber}
 								onClick={() => {
-									setPickedDrink("fanta");
+									dispatch(setDrink("fanta"));
+								}}
+								onIncrement={() => {
+									dispatch(changeDrinkNumber(1));
+								}}
+								onDecrement={() => {
+									dispatch(changeDrinkNumber(-1));
 								}}
 							/>
 						</div>
