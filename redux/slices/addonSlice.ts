@@ -24,7 +24,7 @@ const addonSlice = createSlice({
 	initialState,
 	reducers: {
 		setType(state, action: PayloadAction<IMealType>) {
-			state.type = action.payload;
+			return { ...initialState, type: action.payload };
 		},
 		setSize(state, action: PayloadAction<IMealSize>) {
 			return {

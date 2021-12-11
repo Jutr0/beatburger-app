@@ -12,6 +12,8 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import Price from "../../Price";
 import Modal from "../../Modal";
 import PickProducts from "../PickProducts";
+import { setType } from "../../../redux/slices/addonSlice";
+import { addToCart } from "../../../redux/slices/cartSlice";
 
 type IProps = IOffert & {
 	additionalProduct?: {
@@ -25,6 +27,7 @@ function Offert({
 	products,
 	price,
 	additionalProduct,
+	type,
 }: IProps) {
 	const [isModalShown, setIsModalShown] = useState(false);
 
@@ -38,6 +41,13 @@ function Offert({
 	};
 
 	const onAddToCart = () => {
+		dispatch(setType(type));
+
+		if (type === "other") {
+			dispatch(addToCart({ name, price, type }));
+			return;
+		}
+
 		setIsModalShown(true);
 	};
 
@@ -121,7 +131,7 @@ function Offert({
 					setIsModalShown(false);
 				}}
 			>
-				<PickProducts type="zestaw" />
+				<PickProducts />
 			</Modal>
 		</section>
 	);

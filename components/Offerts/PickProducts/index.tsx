@@ -15,11 +15,7 @@ import InputCheck from "../../InputCheck";
 import styles from "./PickProducts.module.scss";
 import ProductPick from "./ProductPick";
 
-type IProps = {
-	type: "burger" | "zestaw";
-};
-
-function PickProducts({ type }: IProps) {
+function PickProducts() {
 	const dispatch = useAppDispatch();
 	const addons = useAppSelector((state) => state.addons);
 
@@ -35,7 +31,7 @@ function PickProducts({ type }: IProps) {
 
 	return (
 		<div className={styles.container}>
-			{type === "zestaw" && (
+			{addons.type === "zestaw" && (
 				<>
 					<div className={styles.mealSize}>
 						<h1>Wybierz rozmiar zestawu</h1>

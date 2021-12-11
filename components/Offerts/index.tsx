@@ -11,9 +11,68 @@ function Offerts() {
 		<div>
 			<div className={styles.category}>
 				<CategorySign title="Najczęściej zamawiane" />
-				{[1, 3, 34, 54, 545, 4545].map(() => (
+				{[1, 3, 34].map((step) => (
 					<Offert
-						key="1"
+						type="burger"
+						key={step}
+						name="Bacon Burger"
+						thumbnail={burger.src}
+						products={[
+							{
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Poke/15_04/v2_poke_bowl_1_web.png",
+								quantity: 1,
+								name: "SWEET CHILLI POKÉ bowl",
+							},
+							{
+								quantity: 1,
+								name: "Ryż & chrupiące bites",
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Poke/items/Bites_skladniki_ryz_web.png",
+							},
+							{
+								quantity: 1,
+								name: "bez napoju",
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/bez_wyboru.png",
+							},
+						]}
+						price={{ full: 26, point: 95 }}
+					/>
+				))}
+				{[1, 3, 34].map((step) => (
+					<Offert
+						type="zestaw"
+						key={step}
+						name="Bacon Burger"
+						thumbnail={burger.src}
+						products={[
+							{
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Poke/15_04/v2_poke_bowl_1_web.png",
+								quantity: 1,
+								name: "SWEET CHILLI POKÉ bowl",
+							},
+							{
+								quantity: 1,
+								name: "Ryż & chrupiące bites",
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Poke/items/Bites_skladniki_ryz_web.png",
+							},
+							{
+								quantity: 1,
+								name: "bez napoju",
+								thumbnail:
+									"https://amrestcdn.azureedge.net/kfc-web-ordering/KFC/Images/Web/bez_wyboru.png",
+							},
+						]}
+						price={{ full: 26, point: 95 }}
+					/>
+				))}
+				{[1, 3, 34].map((step) => (
+					<Offert
+						type="other"
+						key={step}
 						name="Bacon Burger"
 						thumbnail={burger.src}
 						products={[

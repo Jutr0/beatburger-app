@@ -28,6 +28,7 @@ a {
 	display: flex;
 	justify-content: center;
 	overflow-y: scroll;
+	z-index: 10;
 }
 body.modal-open {
 	overflow: hidden;

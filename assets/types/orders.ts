@@ -1,3 +1,5 @@
+import { IMealType } from "./addons";
+
 export type IOrder = ICart & {
 	client: IClient;
 	paymentMethod: IPaymentMethod;
@@ -22,6 +24,7 @@ export type IMinOffert = {
 	price: IPrice;
 	additionalProducts?: [IProduct & IPrice];
 	quantity?: number;
+	type: IMealType;
 };
 
 export type IOffert = IMinOffert & {
