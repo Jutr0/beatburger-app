@@ -4,9 +4,6 @@ import { Hidden, Visible } from "react-grid-system";
 import Button from "../../Button";
 import AdditionalProduct from "./AdditionalProduct";
 import Product from "./Product";
-
-import AddIcon from "./plus-svgrepo-com.svg";
-import styles from "./Offert.module.scss";
 import { IOffert } from "../../../assets/types/orders";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import Price from "../../Price";
@@ -14,6 +11,9 @@ import Modal from "../../Modal";
 import PickProducts from "../PickProducts";
 import { setType } from "../../../redux/slices/addonSlice";
 import { addToCart } from "../../../redux/slices/cartSlice";
+
+import AddIcon from "./plus-svgrepo-com.svg";
+import styles from "./Offert.module.scss";
 
 type IProps = IOffert & {
 	additionalProduct?: {
@@ -30,8 +30,6 @@ function Offert({
 	type,
 }: IProps) {
 	const [isModalShown, setIsModalShown] = useState(false);
-
-	const cart = useAppSelector((state) => state.cart);
 	const dispatch = useAppDispatch();
 
 	const [isProductsShown, setIsProductsShown] = useState(false);
@@ -44,7 +42,7 @@ function Offert({
 		dispatch(setType(type));
 
 		if (type === "other") {
-			dispatch(addToCart({ name, price, type }));
+			dispatch(addToCart({ name, price, type, id: name }));
 			return;
 		}
 
@@ -131,7 +129,17 @@ function Offert({
 					setIsModalShown(false);
 				}}
 			>
-				<PickProducts />
+				<PickProducts
+					onClose={() => {
+						setIsModalShown(false);
+					}}
+					name={name}
+					price={[
+						{ full: 10, point: 20 },
+						{ full: 20, point: 42 },
+						{ full: 30, point: 43 },
+					]}
+				/>
 			</Modal>
 		</section>
 	);

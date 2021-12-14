@@ -17,7 +17,7 @@ const cartSlice = createSlice({
 			let index: number = -1;
 
 			state.orders.forEach((step, id) => {
-				action.payload.name === step.name ? (index = id) : null;
+				action.payload.id === step.id ? (index = id) : null;
 			});
 			if (state.orders && index > -1) {
 				state.orders[index].quantity!++;

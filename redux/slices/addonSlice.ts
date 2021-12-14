@@ -9,7 +9,6 @@ import { IPrice, IProduct } from "../../assets/types/orders";
 
 const initialState: IAddon = {
 	type: "other",
-	size: "beat",
 	additionalIngridients: [],
 	sumPrice: {
 		full: 0,
@@ -35,6 +34,9 @@ const addonSlice = createSlice({
 				drink: undefined,
 			};
 		},
+		setSumPrice(state, action: PayloadAction<IPrice>) {
+			return { ...state, sumPrice: action.payload };
+		},
 		setSecondMeal(state, action: PayloadAction<ISecondMeal>) {
 			state.secondMeal = action.payload;
 		},
@@ -47,8 +49,8 @@ const addonSlice = createSlice({
 		},
 		removeSecondMeal(state, action: PayloadAction<ISecondMeal>) {
 			if (Array.isArray(state.secondMeal)) {
-				const temp = state.secondMeal.filter((step) => step !== action.payload);
-				state.secondMeal = temp;
+				const index = state.secondMeal.indexOf(action.payload);
+				state.secondMeal.splice(index, 1);
 			}
 		},
 		changeSecondMealNumber(state, action: PayloadAction<number>) {
@@ -60,7 +62,23 @@ const addonSlice = createSlice({
 		setDrink(state, action: PayloadAction<string>) {
 			state.drink = action.payload;
 		},
-		addAdditionalIngridient(state, action: PayloadAction<IProduct & IPrice>) {
+		addDrink(state, action: PayloadAction<string>) {
+			if (Array.isArray(state.drink)) {
+				state.drink.push(action.payload);
+			} else {
+				state.drink = [action.payload];
+			}
+		},
+		removeDrink(state, action: PayloadAction<string>) {
+			if (Array.isArray(state.drink)) {
+				const index = state.drink.indexOf(action.payload);
+				state.drink.splice(index, 1);
+			}
+		},
+		addAdditionalIngridient(
+			state,
+			action: PayloadAction<IProduct & { price: IPrice }>
+		) {
 			let index: number = -1;
 
 			state.additionalIngridients.forEach((step, id) => {
@@ -96,5 +114,8 @@ export const {
 	addSecondMeal,
 	changeSecondMealNumber,
 	changeDrinkNumber,
+	setSumPrice,
+	addDrink,
+	removeDrink,
 } = addonSlice.actions;
 export default addonSlice.reducer;

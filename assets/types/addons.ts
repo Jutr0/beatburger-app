@@ -2,10 +2,10 @@ import { IPrice, IProduct } from "./orders";
 
 export type IAddon = {
 	type: IMealType;
-	size: IMealSize;
+	size?: IMealSize;
 	secondMeal?: ISecondMeal | ISecondMeal[];
-	drink?: string;
-	additionalIngridients: (IProduct & IPrice)[];
+	drink?: string | string[];
+	additionalIngridients: (IProduct & { price: IPrice })[];
 	sumPrice: IPrice;
 	pickedSecondMealNumber: number;
 	pickedDrinkNumber: number;

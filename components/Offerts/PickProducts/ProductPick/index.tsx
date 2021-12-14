@@ -4,6 +4,8 @@ import Image from "next/image";
 
 import styles from "./ProductPick.module.scss";
 import { IMealSize } from "../../../../assets/types/addons";
+import Price from "../../../Price";
+import { IPrice } from "../../../../assets/types/orders";
 
 type IProps = {
 	thumbnail: string;
@@ -16,6 +18,7 @@ type IProps = {
 	onDecrement?: Function;
 	leftNumber?: number;
 	size?: IMealSize;
+	price?: IPrice;
 };
 
 function ProductPick({
@@ -28,6 +31,7 @@ function ProductPick({
 	onDecrement,
 	onIncrement,
 	leftNumber = 1,
+	price,
 }: IProps) {
 	const [quantity, setQuantity] = useState(0);
 
@@ -62,14 +66,25 @@ function ProductPick({
 			<h2>{name}</h2>
 
 			{type === "many" && (
-				<div className={styles.buttons}>
-					<button className={styles.decrement} onClick={() => decrement()}>
-						-
-					</button>
-					<button className={styles.increment} onClick={() => increment()}>
-						+
-					</button>
-				</div>
+				<>
+					{price && price.full > 0 && (
+						<Price
+							{...price}
+							style={{ margin: "14px 0 " }}
+							fullStyle={styles.fullPrice}
+							pointStyle={styles.pointPrice}
+							currencyStyle={styles.currency}
+						/>
+					)}
+					<div className={styles.buttons}>
+						<button className={styles.decrement} onClick={() => decrement()}>
+							-
+						</button>
+						<button className={styles.increment} onClick={() => increment()}>
+							+
+						</button>
+					</div>
+				</>
 			)}
 		</div>
 	);
