@@ -1,4 +1,4 @@
-import { IMealType, ISecondMeal } from "./addons";
+import { IMealMainType, IMealType, ISecondMeal } from "./addons";
 
 export type IOrder = ICart & {
 	client: IClient;
@@ -22,17 +22,18 @@ export type IPrice = {
 export type IMinOffert = {
 	id: string;
 	name: string;
-	price: IPrice;
+	price: IPrice | IPrice[];
 	additionalProducts?: (IProduct & { price: IPrice })[];
 	quantity?: number;
 	type: IMealType;
+	mainType: IMealMainType;
 	secondMeal?: ISecondMeal | ISecondMeal[];
 	drink?: string | string[];
 };
 
 export type IOffert = IMinOffert & {
 	thumbnail: string;
-	products: IProduct[];
+	ingredients: IProduct[];
 };
 
 export type IProduct = {

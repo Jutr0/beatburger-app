@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import product from "../../../assets/images/bekon.png";
-import { IMealSize, ISecondMeal } from "../../../assets/types/addons";
+import {
+	IMealMainType,
+	IMealSize,
+	ISecondMeal,
+} from "../../../assets/types/addons";
 import { IMinOffert, IPrice } from "../../../assets/types/orders";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
@@ -31,9 +35,10 @@ type IProps = {
 	name: string;
 	price: IPrice[] | IPrice;
 	onClose: Function;
+	mainType: IMealMainType;
 };
 
-function PickProducts({ name, price, onClose }: IProps) {
+function PickProducts({ name, price, onClose, mainType }: IProps) {
 	const dispatch = useAppDispatch();
 	const addons = useAppSelector((state) => state.addons);
 
@@ -57,11 +62,13 @@ function PickProducts({ name, price, onClose }: IProps) {
 
 		const temp: IMinOffert = {
 			name,
+			mainType,
 			price: addons.sumPrice,
-			additionalProducts: addons.additionalIngridients.filter(
+			additionalProducts: addons.additionalIngredients.filter(
 				(step) => step.quantity > 0
 			),
 			type: addons.type,
+
 			quantity: 1,
 			id: Date.now().toString(),
 			secondMeal: addons.secondMeal,
@@ -74,7 +81,7 @@ function PickProducts({ name, price, onClose }: IProps) {
 	};
 	useEffect(() => {
 		calculateSum();
-	}, [addons.size, addons.additionalIngridients]);
+	}, [addons.size, addons.additionalIngredients]);
 
 	const calculateSum = () => {
 		let full: number = 0;
@@ -100,7 +107,7 @@ function PickProducts({ name, price, onClose }: IProps) {
 			}
 		}
 
-		addons.additionalIngridients.forEach((step) => {
+		addons.additionalIngredients.forEach((step) => {
 			full += step.price.full * step.quantity;
 			point += step.price.point * step.quantity;
 		});
@@ -230,49 +237,51 @@ function PickProducts({ name, price, onClose }: IProps) {
 					</div>
 				</>
 			)}
-			<div className={styles.burgerAddons}>
-				<h1>Czy życzysz sobie dodatek do burgera?</h1>
-				<div className={styles.products}>
-					<ProductPick
-						price={{ full: 3, point: 0 }}
-						thumbnail={product.src}
-						name="bekon"
-						maxNumber={5}
-						onIncrement={() => {
-							dispatch(
-								addAdditionalIngridient({
-									name: "bekon",
-									quantity: 1,
-									thumbnail: "",
-									price: { full: 3, point: 0 },
-								})
-							);
-						}}
-						onDecrement={() => {
-							dispatch(removeAdditionalIngridient("bekon"));
-						}}
-					/>
-					<ProductPick
-						price={{ full: 5, point: 0 }}
-						onIncrement={() => {
-							dispatch(
-								addAdditionalIngridient({
-									name: "mieso",
-									quantity: 1,
-									thumbnail: "",
-									price: { full: 5, point: 0 },
-								})
-							);
-						}}
-						onDecrement={() => {
-							dispatch(removeAdditionalIngridient("mieso"));
-						}}
-						thumbnail={product.src}
-						name="mieso"
-						maxNumber={5}
-					/>
+			{mainType === "burger" && (
+				<div className={styles.burgerAddons}>
+					<h1>Czy życzysz sobie dodatek do burgera?</h1>
+					<div className={styles.products}>
+						<ProductPick
+							price={{ full: 3, point: 0 }}
+							thumbnail={product.src}
+							name="bekon"
+							maxNumber={5}
+							onIncrement={() => {
+								dispatch(
+									addAdditionalIngridient({
+										name: "bekon",
+										quantity: 1,
+										thumbnail: "",
+										price: { full: 3, point: 0 },
+									})
+								);
+							}}
+							onDecrement={() => {
+								dispatch(removeAdditionalIngridient("bekon"));
+							}}
+						/>
+						<ProductPick
+							price={{ full: 5, point: 0 }}
+							onIncrement={() => {
+								dispatch(
+									addAdditionalIngridient({
+										name: "mieso",
+										quantity: 1,
+										thumbnail: "",
+										price: { full: 5, point: 0 },
+									})
+								);
+							}}
+							onDecrement={() => {
+								dispatch(removeAdditionalIngridient("mieso"));
+							}}
+							thumbnail={product.src}
+							name="mieso"
+							maxNumber={5}
+						/>
+					</div>
 				</div>
-			</div>
+			)}
 			{addons.sumPrice.full > 0 && (
 				<Price {...addons.sumPrice} style={{ margin: "32px 0 16px" }} />
 			)}

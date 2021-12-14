@@ -9,7 +9,7 @@ import { IPrice, IProduct } from "../../assets/types/orders";
 
 const initialState: IAddon = {
 	type: "other",
-	additionalIngridients: [],
+	additionalIngredients: [],
 	sumPrice: {
 		full: 0,
 		point: 0,
@@ -29,6 +29,7 @@ const addonSlice = createSlice({
 			return {
 				...state,
 				pickedSecondMealNumber: 0,
+				pickedDrinkNumber: 0,
 				size: action.payload,
 				secondMeal: undefined,
 				drink: undefined,
@@ -81,24 +82,24 @@ const addonSlice = createSlice({
 		) {
 			let index: number = -1;
 
-			state.additionalIngridients.forEach((step, id) => {
+			state.additionalIngredients.forEach((step, id) => {
 				action.payload.name === step.name ? (index = id) : null;
 			});
-			if (state.additionalIngridients && index > -1) {
-				state.additionalIngridients[index].quantity!++;
+			if (state.additionalIngredients && index > -1) {
+				state.additionalIngredients[index].quantity!++;
 			} else {
-				state.additionalIngridients.push({ ...action.payload, quantity: 1 });
+				state.additionalIngredients.push({ ...action.payload, quantity: 1 });
 			}
 		},
 		removeAdditionalIngridient(state, action: PayloadAction<string>) {
 			let index: number = -1;
 
-			state.additionalIngridients.forEach((step, id) => {
+			state.additionalIngredients.forEach((step, id) => {
 				action.payload === step.name ? (index = id) : null;
 			});
 			if (index < 0) return;
-			if (state.additionalIngridients[index].quantity < 1) return;
-			state.additionalIngridients[index].quantity--;
+			if (state.additionalIngredients[index].quantity < 1) return;
+			state.additionalIngredients[index].quantity--;
 		},
 	},
 });

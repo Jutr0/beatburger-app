@@ -5,7 +5,7 @@ export type IAddon = {
 	size?: IMealSize;
 	secondMeal?: ISecondMeal | ISecondMeal[];
 	drink?: string | string[];
-	additionalIngridients: (IProduct & { price: IPrice })[];
+	additionalIngredients: (IProduct & { price: IPrice })[];
 	sumPrice: IPrice;
 	pickedSecondMealNumber: number;
 	pickedDrinkNumber: number;
@@ -13,6 +13,8 @@ export type IAddon = {
 
 export type IMealSize = "beat" | "beater" | "beatest";
 
-export type IMealType = "zestaw" | "burger" | "other";
+export type IMealType = "zestaw" | "other";
 
 export type ISecondMeal = "fries" | "salad" | "sweetFries";
+
+export type IMealMainType = "burger" | "chicken" | "other";

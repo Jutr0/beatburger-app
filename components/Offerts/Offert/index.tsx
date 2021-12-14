@@ -24,10 +24,11 @@ type IProps = IOffert & {
 function Offert({
 	name,
 	thumbnail,
-	products,
+	ingredients,
 	price,
 	additionalProduct,
 	type,
+	mainType,
 }: IProps) {
 	const [isModalShown, setIsModalShown] = useState(false);
 	const dispatch = useAppDispatch();
@@ -42,13 +43,12 @@ function Offert({
 		dispatch(setType(type));
 
 		if (type === "other") {
-			dispatch(addToCart({ name, price, type, id: name }));
+			dispatch(addToCart({ name, price, type, id: name, mainType }));
 			return;
 		}
 
 		setIsModalShown(true);
 	};
-
 	return (
 		<section className={styles.container}>
 			<div className={styles.productDescription}>
@@ -62,8 +62,8 @@ function Offert({
 					></div>
 					<Hidden sm xs>
 						<div className={styles.productItems}>
-							{products &&
-								products.map(({ name, thumbnail, quantity }) => (
+							{ingredients &&
+								ingredients.map(({ name, thumbnail, quantity }) => (
 									<Product
 										key={name}
 										name={name}
@@ -83,7 +83,7 @@ function Offert({
 					<Visible xs sm>
 						<h1>{name}</h1>
 					</Visible>
-					<Price {...price} />
+					<Price {...(Array.isArray(price) ? price[0] : price)} />
 				</div>
 				<Button
 					Icon={AddIcon}
@@ -92,7 +92,6 @@ function Offert({
 				>
 					Dodaj
 				</Button>
-				{/* <div className={styles.personalise}>Personalizuj zestaw</div> */}
 			</div>
 			<Visible sm xs>
 				<div className={styles.ingridientsContainer}>
@@ -108,8 +107,8 @@ function Offert({
 							isProductsShown && styles.active
 						}`}
 					>
-						{products &&
-							products.map(({ name, thumbnail, quantity }) => (
+						{ingredients &&
+							ingredients.map(({ name, thumbnail, quantity }) => (
 								<Product
 									key={name}
 									name={name}
@@ -130,15 +129,12 @@ function Offert({
 				}}
 			>
 				<PickProducts
+					mainType={mainType}
 					onClose={() => {
 						setIsModalShown(false);
 					}}
 					name={name}
-					price={[
-						{ full: 10, point: 20 },
-						{ full: 20, point: 42 },
-						{ full: 30, point: 43 },
-					]}
+					price={price}
 				/>
 			</Modal>
 		</section>
