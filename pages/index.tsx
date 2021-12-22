@@ -1,29 +1,41 @@
 import React, { useEffect } from "react";
 import { Container } from "react-grid-system";
-import { Provider } from "react-redux";
 
 import LandingScreen from "../components/LandingScreen";
 import Menu from "../components/Menu";
 import Offerts from "../components/Offerts";
-import { store } from "../redux/store";
 import Cart from "../components/Cart";
 
 import styles from "../styles/Home.module.scss";
 import {
+	getIngredients,
 	getOfferts,
 	getSections,
 	IApiOffert,
+	IIngredient,
 	ISection,
 } from "../assets/firebase/firestore";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setIngredients } from "../redux/slices/ingredientsSlice";
+import { GetServerSideProps } from "next";
 
 type IProps = {
 	sections: ISection[];
 	offerts: { sectionId: string; data: IApiOffert[] }[];
+	ingredients: IIngredient[];
 };
 
-function Home({ sections, offerts }: IProps) {
+function Home({ sections, offerts, ingredients }: IProps) {
+	const dispatch = useAppDispatch();
+	const ingredientsRedux = useAppSelector((state) => state.ingredients);
+
+	useEffect(() => {
+		if (ingredientsRedux.length !== 0) return;
+		dispatch(setIngredients(ingredients));
+	}, [ingredients, ingredientsRedux.length]);
+
 	return (
-		<Provider store={store}>
+		<>
 			<LandingScreen />
 			<Container
 				fluid={true}
@@ -37,14 +49,15 @@ function Home({ sections, offerts }: IProps) {
 				<Cart />
 				<Offerts sections={sections} offerts={offerts} />
 			</Container>
-		</Provider>
+		</>
 	);
 }
 
 export default Home;
 
-export const getStaticProps = async () => {
-	const sections = await getSections().then((res) => res || []);
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+	const sections = (await getSections()) || [];
+	const ingredients = (await getIngredients()) || [];
 
 	const offerts = await Promise.all(
 		sections.map(async (section) => {
@@ -54,7 +67,6 @@ export const getStaticProps = async () => {
 	);
 
 	return {
-		revalidate: 1,
-		props: { sections, offerts },
+		props: { sections, offerts, ingredients },
 	};
 };

@@ -1,7 +1,7 @@
-import { collection, doc, getDocs, getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
 import app from ".";
 import { IMealMainType, IMealType } from "../types/addons";
-import { IPrice, IProduct } from "../types/orders";
+import { IPrice } from "../types/orders";
 
 const firestore = getFirestore(app);
 export type IIngredient = {
@@ -9,6 +9,7 @@ export type IIngredient = {
 	name: string;
 	thumbnail: string;
 	ingredientId?: string;
+	price?: IPrice;
 };
 export type ISection = { id: string; name: string; title: string };
 export type IApiOffert = {
@@ -26,6 +27,7 @@ export type IApiOffert = {
 	price: IPrice | IPrice[];
 	thumbnail: string;
 	type: IMealType;
+	size?: "XL" | "normal";
 };
 
 const getSections = async () => {

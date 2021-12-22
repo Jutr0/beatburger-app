@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import product from "../../../assets/images/bekon.png";
-import {
-	IMealMainType,
-	IMealSize,
-	ISecondMeal,
-} from "../../../assets/types/addons";
+import { IMealMainType } from "../../../assets/types/addons";
 import { IMinOffert, IPrice } from "../../../assets/types/orders";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
@@ -41,6 +37,7 @@ type IProps = {
 function PickProducts({ name, price, onClose, mainType }: IProps) {
 	const dispatch = useAppDispatch();
 	const addons = useAppSelector((state) => state.addons);
+	const ingredients = useAppSelector((state) => state.ingredients);
 
 	const maxPickedSecondMeal = 2;
 	const maxPickedDrinkNumber = 2;
@@ -117,7 +114,6 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 
 		dispatch(setSumPrice({ full, point }));
 	};
-
 	return (
 		<div className={styles.container}>
 			{addons.type === "zestaw" && (
@@ -241,44 +237,32 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 				<div className={styles.burgerAddons}>
 					<h1>Czy życzysz sobie dodatek do burgera?</h1>
 					<div className={styles.products}>
-						<ProductPick
-							price={{ full: 3, point: 0 }}
-							thumbnail={product.src}
-							name="bekon"
-							maxNumber={5}
-							onIncrement={() => {
-								dispatch(
-									addAdditionalIngridient({
-										name: "bekon",
-										quantity: 1,
-										thumbnail: "",
-										price: { full: 3, point: 0 },
-									})
-								);
-							}}
-							onDecrement={() => {
-								dispatch(removeAdditionalIngridient("bekon"));
-							}}
-						/>
-						<ProductPick
-							price={{ full: 5, point: 0 }}
-							onIncrement={() => {
-								dispatch(
-									addAdditionalIngridient({
-										name: "mieso",
-										quantity: 1,
-										thumbnail: "",
-										price: { full: 5, point: 0 },
-									})
-								);
-							}}
-							onDecrement={() => {
-								dispatch(removeAdditionalIngridient("mieso"));
-							}}
-							thumbnail={product.src}
-							name="mieso"
-							maxNumber={5}
-						/>
+						{ingredients.map((step) => {
+							return (
+								step.price && (
+									<ProductPick
+										key={step.id}
+										price={step.price}
+										thumbnail={step.thumbnail}
+										name={step.name}
+										maxNumber={5}
+										onIncrement={() => {
+											dispatch(
+												addAdditionalIngridient({
+													name: step.name,
+													quantity: 1,
+													thumbnail: "",
+													price: step.price!,
+												})
+											);
+										}}
+										onDecrement={() => {
+											dispatch(removeAdditionalIngridient(step.name));
+										}}
+									/>
+								)
+							);
+						})}
 					</div>
 				</div>
 			)}

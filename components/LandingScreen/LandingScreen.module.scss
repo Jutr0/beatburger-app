@@ -2,7 +2,9 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	min-height: 100vh;
+	min-height: 300px;
+	height: 100vh;
+	max-height: 1200px;
 	width: 100%;
 	display: flex;
 	flex-direction: column;
@@ -10,10 +12,11 @@
 	justify-content: space-evenly;
 	text-align: center;
 	padding-bottom: 64px;
-
+	position: relative;
 	.burger {
 		width: 90vw;
 		max-width: 500px;
+		z-index: 1;
 	}
 	.logo {
 		width: 90vw;
@@ -27,4 +30,36 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+}
+
+@media screen and (min-width: 768px) {
+	.background {
+		.logo {
+			position: absolute;
+			left: 120px;
+			top: 0;
+		}
+		.mainHeading {
+			position: absolute;
+			left: 15%;
+			top: 40%;
+			transform: rotateZ(-30deg) translateY(-50%);
+			z-index: 2;
+		}
+		.burger {
+			position: absolute;
+			bottom: 64px;
+			right: 15%;
+			width: 40vw;
+			max-width: 700px;
+		}
+	}
+}
+
+@media screen and (orientation: portrait) {
+	.background {
+		min-height: 100vh !important;
+		height: auto !important;
+		max-height: none !important;
+	}
 }

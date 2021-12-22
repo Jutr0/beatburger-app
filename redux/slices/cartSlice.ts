@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ICart, IMinOffert } from "../../assets/types/orders";
+import { ICart, IMinOffert, IPrice } from "../../assets/types/orders";
 
 const initialState: ICart = {
 	orders: [],
@@ -24,8 +24,9 @@ const cartSlice = createSlice({
 			} else {
 				state.orders.push({ ...action.payload, quantity: 1 });
 			}
-			state.sumPrice.full += action.payload.price.full;
-			state.sumPrice.point += action.payload.price.point;
+			const price = action.payload.price as IPrice;
+			state.sumPrice.full += price.full;
+			state.sumPrice.point += price.point;
 			if (state.sumPrice.point >= 100) {
 				state.sumPrice.full++;
 				state.sumPrice.point %= 100;

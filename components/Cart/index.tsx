@@ -1,5 +1,4 @@
 import React from "react";
-import { ICart } from "../../assets/types/orders";
 import { useAppSelector } from "../../redux/hooks";
 import Price from "../Price";
 import CartIcon from "../../assets/icons/cart_icon.svg";

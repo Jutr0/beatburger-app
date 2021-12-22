@@ -30,7 +30,7 @@ function Product({
 				className={styles.thumbnail}
 				style={{ backgroundImage: "url(" + thumbnail + ")" }}
 			>
-				{quantity > 0 && <div className={styles.quantity}>{quantity}x</div>}
+				{quantity > 1 && <div className={styles.quantity}>{quantity}x</div>}
 			</div>
 			<div className={styles.title} style={{ color }}>
 				{name}

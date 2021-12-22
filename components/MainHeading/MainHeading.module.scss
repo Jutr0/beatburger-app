@@ -23,3 +23,19 @@
 		}
 	}
 }
+@media screen and (min-width: 768px) {
+	.mainHeading {
+		font-size: 64px;
+		.bigger {
+			font-size: 96px;
+		}
+	}
+}
+@media screen and (min-width: 1200px) {
+	.mainHeading {
+		font-size: 72px;
+		.bigger {
+			font-size: 112px;
+		}
+	}
+}

@@ -5,7 +5,7 @@ import Button from "../../Button";
 import AdditionalProduct from "./AdditionalProduct";
 import Product from "./Product";
 import { IOffert } from "../../../assets/types/orders";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch } from "../../../redux/hooks";
 import Price from "../../Price";
 import Modal from "../../Modal";
 import PickProducts from "../PickProducts";
@@ -41,8 +41,7 @@ function Offert({
 
 	const onAddToCart = () => {
 		dispatch(setType(type));
-
-		if (type === "other") {
+		if (type === "other" && mainType !== "burger") {
 			dispatch(addToCart({ name, price, type, id: name, mainType }));
 			return;
 		}

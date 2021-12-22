@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Offert from "./Offert";
 
 import burger from "../../assets/images/burger.png";
@@ -19,8 +19,48 @@ type IProps = {
 };
 
 function Offerts({ sections, offerts }: IProps) {
+	const newOfferts = useRef<IApiOffert[]>([]);
+	const bestsellerOfferts = useRef<IApiOffert[]>([]);
+
+	useEffect(() => {
+		newOfferts.current = [];
+		bestsellerOfferts.current = [];
+
+		offerts.forEach((offert) => {
+			const temp = offert.data.forEach((step) => {
+				if (!step.isNew) return;
+				newOfferts.current.push(step);
+			});
+		});
+
+		offerts.forEach((offert) => {
+			const temp = offert.data.forEach((step) => {
+				if (!step.isBestseller) return;
+				bestsellerOfferts.current.push(step);
+			});
+		});
+	}, [offerts]);
+
 	return (
 		<div>
+			{newOfferts.current.length !== 0 && (
+				<Section
+					key="newOfferts"
+					name="newOfferts"
+					title="NOWOŚĆ!"
+					id="newOfferts"
+					offerts={newOfferts.current}
+				/>
+			)}
+			{bestsellerOfferts.current.length !== 0 && (
+				<Section
+					key="bestsellerOfferts"
+					name="bestsellerOfferts"
+					title="Najczęściej zamawiane"
+					id="bestsellerOfferts"
+					offerts={bestsellerOfferts.current}
+				/>
+			)}
 			{sections &&
 				sections.map((section) => (
 					<Section
