@@ -85,6 +85,7 @@ function Offert({
 					<Price {...(Array.isArray(price) ? price[0] : price)} />
 				</div>
 				<Button
+					style={{ marginBottom: 48 }}
 					Icon={AddIcon}
 					iconProps={{ width: "13", height: "13" }}
 					onClick={onAddToCart}
@@ -92,35 +93,37 @@ function Offert({
 					Dodaj
 				</Button>
 			</div>
-			<Visible sm xs>
-				<div className={styles.ingridientsContainer}>
-					<Button
-						type="text"
-						className={styles.showIngridientsButton}
-						onClick={() => toggleProducts()}
-					>
-						Zobacz składniki
-					</Button>
-					<div
-						className={`${styles.ingridients} ${
-							isProductsShown && styles.active
-						}`}
-					>
-						{ingredients &&
-							ingredients.map(({ name, thumbnail, quantity }) => (
-								<Product
-									key={name}
-									name={name}
-									thumbnail={thumbnail}
-									quantity={quantity}
-								/>
-							))}
-						{additionalProduct && (
-							<AdditionalProduct title={additionalProduct.title} />
-						)}
+			{ingredients.length !== 0 && (
+				<Visible sm xs>
+					<div className={styles.ingridientsContainer}>
+						<Button
+							type="text"
+							className={styles.showIngridientsButton}
+							onClick={() => toggleProducts()}
+						>
+							Zobacz składniki
+						</Button>
+						<div
+							className={`${styles.ingridients} ${
+								isProductsShown && styles.active
+							}`}
+						>
+							{ingredients.length !== 0 &&
+								ingredients.map(({ name, thumbnail, quantity }) => (
+									<Product
+										key={name}
+										name={name}
+										thumbnail={thumbnail}
+										quantity={quantity}
+									/>
+								))}
+							{additionalProduct && (
+								<AdditionalProduct title={additionalProduct.title} />
+							)}
+						</div>
 					</div>
-				</div>
-			</Visible>
+				</Visible>
+			)}
 			<Modal
 				show={isModalShown}
 				onClose={() => {

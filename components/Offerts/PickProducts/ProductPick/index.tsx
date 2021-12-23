@@ -6,6 +6,8 @@ import styles from "./ProductPick.module.scss";
 import { IMealSize } from "../../../../assets/types/addons";
 import Price from "../../../Price";
 import { IPrice } from "../../../../assets/types/orders";
+import ChangeQuantityButton from "../../../QuantityButtons/ChangeQuantityButton";
+import QuantityButtons from "../../../QuantityButtons";
 
 type IProps = {
 	thumbnail: string;
@@ -76,14 +78,15 @@ function ProductPick({
 							currencyStyle={styles.currency}
 						/>
 					)}
-					<div className={styles.buttons}>
-						<button className={styles.decrement} onClick={() => decrement()}>
-							-
-						</button>
-						<button className={styles.increment} onClick={() => increment()}>
-							+
-						</button>
-					</div>
+					{/* <div className={styles.buttons}>
+						<ChangeQuantityButton onClick={decrement}>-</ChangeQuantityButton>
+						<ChangeQuantityButton onClick={increment}>+</ChangeQuantityButton>
+					</div> */}
+					<QuantityButtons
+						onIncrement={increment}
+						onDecrement={decrement}
+						className={styles.buttons}
+					/>
 				</>
 			)}
 		</div>

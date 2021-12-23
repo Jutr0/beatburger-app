@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from "react";
-import {
-	getOfferts,
-	IApiOffert,
-	IIngredient,
-} from "../../../assets/firebase/firestore";
+import { IApiOffert, IIngredient } from "../../../assets/firebase/firestore";
 import CategorySign from "../CategorySign";
 import Offert from "../Offert";
 

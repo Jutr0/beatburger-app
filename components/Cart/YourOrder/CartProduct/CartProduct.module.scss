@@ -1,0 +1,47 @@
+@import "../../../../styles/colors";
+
+.container {
+	width: 100%;
+	margin: 4px 4px 0;
+	padding: 4px;
+	border-top: 1px solid $color-text-primary;
+	display: flex;
+	justify-content: space-between;
+}
+.title {
+	margin-left: -4px;
+	font-weight: 600;
+	font-size: 18px;
+}
+.addonsContainer {
+	font-size: 14px;
+}
+.addon {
+	color: $color-text-secondary;
+	&::before {
+		display: inline-block;
+		content: "+";
+		margin-right: 4px;
+	}
+}
+
+.buttons {
+	width: 20px;
+	height: 20px;
+	border-radius: 1px;
+	margin-left: 2px;
+}
+.priceContainer {
+	.fullPrice {
+		font-size: 24px;
+	}
+	.pointPrice {
+		font-size: 12px !important;
+	}
+	.currency {
+		display: none;
+	}
+	.price {
+		margin-top: 12px;
+	}
+}

@@ -1,0 +1,20 @@
+@import "../../../styles/colors";
+
+.button {
+	cursor: pointer;
+	transition: all 0.2s;
+	width: 36px;
+	height: 36px;
+	background-color: $color-primary;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: $color-background;
+	font-size: 28px;
+	font-weight: 700;
+	border: none;
+	&:hover {
+		background-color: darken($color: $color-primary, $amount: 15);
+	}
+}

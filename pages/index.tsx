@@ -46,7 +46,6 @@ function Home({ sections, offerts, ingredients }: IProps) {
 				component="main"
 			>
 				<Menu />
-				<Cart />
 				<Offerts sections={sections} offerts={offerts} />
 			</Container>
 		</>
