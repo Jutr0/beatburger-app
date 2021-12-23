@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
 	IAddon,
+	IDrink,
 	IMealSize,
 	IMealType,
 	ISecondMeal,
@@ -60,17 +61,17 @@ const addonSlice = createSlice({
 		changeDrinkNumber(state, action: PayloadAction<number>) {
 			state.pickedDrinkNumber += action.payload;
 		},
-		setDrink(state, action: PayloadAction<string>) {
+		setDrink(state, action: PayloadAction<IDrink>) {
 			state.drink = action.payload;
 		},
-		addDrink(state, action: PayloadAction<string>) {
+		addDrink(state, action: PayloadAction<IDrink>) {
 			if (Array.isArray(state.drink)) {
 				state.drink.push(action.payload);
 			} else {
 				state.drink = [action.payload];
 			}
 		},
-		removeDrink(state, action: PayloadAction<string>) {
+		removeDrink(state, action: PayloadAction<IDrink>) {
 			if (Array.isArray(state.drink)) {
 				const index = state.drink.indexOf(action.payload);
 				state.drink.splice(index, 1);

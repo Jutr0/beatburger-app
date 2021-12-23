@@ -28,7 +28,7 @@ export type IMinOffert = {
 	type: IMealType;
 	mainType: IMealMainType;
 	secondMeal?: ISecondMeal | ISecondMeal[];
-	drink?: string | string[];
+	drink?: { name: string; title: String } | { name: string; title: String }[];
 };
 
 export type IOffert = IMinOffert & {

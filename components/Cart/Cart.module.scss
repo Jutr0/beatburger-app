@@ -36,6 +36,10 @@
 	font-size: 14px;
 	position: sticky;
 	top: -260px;
+	.orderButton {
+		width: 100%;
+		margin-top: 12px;
+	}
 }
 
 .deliveryType {
@@ -68,8 +72,4 @@
 		height: 10px;
 		background-color: $color-green;
 	}
-}
-.orderButton {
-	width: 100%;
-	margin-top: 12px;
 }

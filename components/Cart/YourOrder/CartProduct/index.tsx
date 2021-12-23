@@ -1,18 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
+import { IMinOffert, IPrice } from "../../../../assets/types/orders";
 import Price from "../../../Price";
 import QuantityButtons from "../../../QuantityButtons";
 
 import styles from "./CartProduct.module.scss";
 
-function CartProduct() {
+type IProps = IMinOffert;
+
+function CartProduct({
+	name,
+	price,
+	type,
+	id,
+	mainType,
+	quantity,
+	additionalProducts,
+	drink,
+	secondMeal,
+}: IProps) {
+	const [realPrice, setRealPrice] = useState<IPrice>({ full: 0, point: 0 });
+
+	useEffect(() => {
+		if (Array.isArray(price)) return;
+
+		let tempFull = price.full * quantity!;
+		let tempPoint = price.point * quantity!;
+
+		tempFull += Math.floor(tempPoint / 100);
+		tempPoint %= 100;
+		setRealPrice({ full: tempFull, point: tempPoint });
+	});
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.infoContainer}>
-				<div className={styles.title}>2x Bacon Burger Zestaw</div>
+				<div className={styles.title}>
+					{quantity && quantity > 1 && quantity + "x "}
+					{name}
+				</div>
 				<div className={styles.addonsContainer}>
-					<div className={styles.addon}>frytki</div>
-					<div className={styles.addon}>pepsi ( 330ml )</div>
-					<div className={styles.addon}>2x jalapeno</div>
+					{secondMeal &&
+						Array.isArray(secondMeal) &&
+						secondMeal.map((step, i) => (
+							<div key={step.name + i} className={styles.addon}>
+								{step.title}
+							</div>
+						))}
+					{secondMeal && !Array.isArray(secondMeal) && (
+						<div className={styles.addon}>{secondMeal.title}</div>
+					)}
+					{drink &&
+						Array.isArray(drink) &&
+						drink.map((step, i) => (
+							<div key={step.name + i} className={styles.addon}>
+								{step.title}
+							</div>
+						))}
+					{drink && !Array.isArray(drink) && (
+						<div className={styles.addon}>{drink.title}</div>
+					)}
+					{additionalProducts &&
+						additionalProducts.length !== 0 &&
+						additionalProducts.map((product) => (
+							<div key={product.name} className={styles.addon}>
+								{product.quantity > 1 && product.quantity + "x "}
+								{product.name}
+							</div>
+						))}
 				</div>
 			</div>
 			<div className={styles.priceContainer}>
@@ -26,8 +81,7 @@ function CartProduct() {
 					fullStyle={styles.fullPrice}
 					pointStyle={styles.pointPrice}
 					currencyStyle={styles.currency}
-					full={23}
-					point={23}
+					{...(realPrice as IPrice)}
 				/>
 			</div>
 		</div>

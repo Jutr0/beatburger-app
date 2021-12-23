@@ -42,9 +42,9 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 	const maxPickedSecondMeal = 2;
 	const maxPickedDrinkNumber = 2;
 
-	const onPickOption = (callback: Function, name: string) => {
+	const onPickOption = (callback: Function, obj: any) => {
 		if (addons.size !== "beatest") {
-			dispatch(callback(name));
+			dispatch(callback(obj));
 		}
 	};
 
@@ -150,40 +150,56 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 						<div className={styles.products}>
 							<ProductPick
 								thumbnail={product.src}
-								isChecked={addons.secondMeal === "fries"}
+								isChecked={
+									!Array.isArray(addons.secondMeal) &&
+									addons.secondMeal?.name === "fries"
+								}
 								name="Fytki"
 								maxNumber={maxPickedSecondMeal}
 								leftNumber={maxPickedSecondMeal - addons.pickedSecondMealNumber}
 								onClick={() => {
-									onPickOption(setSecondMeal, "fries");
+									onPickOption(setSecondMeal, {
+										name: "fries",
+										title: "Frytki",
+									});
 								}}
 								onIncrement={() => {
 									dispatch(changeSecondMealNumber(1));
-									dispatch(addSecondMeal("fries"));
+									dispatch(addSecondMeal({ name: "fries", title: "Frytki" }));
 								}}
 								onDecrement={() => {
 									dispatch(changeSecondMealNumber(-1));
-									dispatch(removeSecondMeal("fries"));
+									dispatch(
+										removeSecondMeal({ name: "fries", title: "Frytki" })
+									);
 								}}
 								type={addons.size === "beatest" ? "many" : "one"}
 							/>
 							<ProductPick
 								thumbnail={product.src}
-								isChecked={addons.secondMeal === "salad"}
+								isChecked={
+									!Array.isArray(addons.secondMeal) &&
+									addons.secondMeal?.name === "salad"
+								}
 								name="Sałatka"
 								type={addons.size === "beatest" ? "many" : "one"}
 								maxNumber={maxPickedSecondMeal}
 								onClick={() => {
-									onPickOption(setSecondMeal, "salad");
+									onPickOption(setSecondMeal, {
+										name: "salad",
+										title: "Sałatka",
+									});
 								}}
 								leftNumber={maxPickedSecondMeal - addons.pickedSecondMealNumber}
 								onIncrement={() => {
 									dispatch(changeSecondMealNumber(1));
-									dispatch(addSecondMeal("salad"));
+									dispatch(addSecondMeal({ name: "salad", title: "Sałatka" }));
 								}}
 								onDecrement={() => {
 									dispatch(changeSecondMealNumber(-1));
-									dispatch(removeSecondMeal("salad"));
+									dispatch(
+										removeSecondMeal({ name: "salad", title: "Sałatka" })
+									);
 								}}
 							/>
 						</div>
@@ -194,39 +210,49 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 							<ProductPick
 								leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}
 								thumbnail={product.src}
-								isChecked={addons.drink === "coca-cola"}
+								isChecked={
+									!Array.isArray(addons.drink) &&
+									addons.drink?.name === "coca-cola"
+								}
 								name="Coca-Cola"
 								maxNumber={maxPickedDrinkNumber}
 								onClick={() => {
-									onPickOption(setDrink, "coca-cola");
+									onPickOption(setDrink, {
+										name: "coca-cola",
+										title: "Coca-Cola",
+									});
 								}}
 								type={addons.size === "beatest" ? "many" : "one"}
 								onIncrement={() => {
 									dispatch(changeDrinkNumber(1));
-									dispatch(addDrink("coca-cola"));
+									dispatch(addDrink({ name: "coca-cola", title: "Coca-Cola" }));
 								}}
 								onDecrement={() => {
 									dispatch(changeDrinkNumber(-1));
-									dispatch(removeDrink("coca-cola"));
+									dispatch(
+										removeDrink({ name: "coca-cola", title: "Coca-Cola" })
+									);
 								}}
 							/>
 							<ProductPick
 								leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}
 								thumbnail={product.src}
-								isChecked={addons.drink === "fanta"}
+								isChecked={
+									!Array.isArray(addons.drink) && addons.drink?.name === "fanta"
+								}
 								name="Fanta"
 								type={addons.size === "beatest" ? "many" : "one"}
 								maxNumber={maxPickedDrinkNumber}
 								onClick={() => {
-									onPickOption(setDrink, "fanta");
+									onPickOption(setDrink, { name: "fanta", title: "Fanta" });
 								}}
 								onIncrement={() => {
 									dispatch(changeDrinkNumber(1));
-									dispatch(addDrink("fanta"));
+									dispatch(addDrink({ name: "fanta", title: "Fanta" }));
 								}}
 								onDecrement={() => {
 									dispatch(changeDrinkNumber(-1));
-									dispatch(removeDrink("fanta"));
+									dispatch(removeDrink({ name: "fanta", title: "Fanta" }));
 								}}
 							/>
 						</div>

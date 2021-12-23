@@ -4,9 +4,6 @@ import Image from "next/image";
 import { useAppSelector } from "../../redux/hooks";
 import Price from "../Price";
 import CartIcon from "../../assets/icons/cart_icon.svg";
-import DeliveryIcon from "../../assets/icons/delivery_icon.svg";
-import HandbagIcon from "../../assets/icons/handbag_icon.svg";
-import RestaurantIcon from "../../assets/icons/restaurant_icon.svg";
 
 import styles from "./Cart.module.scss";
 import { Hidden, Visible } from "react-grid-system";
