@@ -14,6 +14,7 @@ type IProps = React.PropsWithChildren<{
 	};
 	style?: Object;
 	className?: string;
+	disabled?: boolean;
 }>;
 
 function Button({
@@ -24,9 +25,11 @@ function Button({
 	style,
 	className,
 	type = "filled",
+	disabled = false,
 }: IProps) {
 	return (
 		<button
+			disabled={disabled}
 			onClick={(_) => onClick && onClick()}
 			className={`${styles.button} ${className} ${styles[type]}`}
 			style={style}

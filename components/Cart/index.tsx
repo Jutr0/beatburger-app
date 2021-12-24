@@ -33,7 +33,12 @@ function Cart() {
 						<option value="inRestaurant">&#xf0f5; Zjem na miejscu</option>
 					</select>
 					<YourOrder />
-					<Button className={styles.orderButton}>Zamawiam</Button>
+					<Button
+						disabled={cart.sumPrice.full <= 0}
+						className={styles.orderButton}
+					>
+						Zamawiam
+					</Button>
 				</div>
 			</Hidden>
 

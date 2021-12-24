@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import product from "../../../assets/images/bekon.png";
-import { IMealMainType } from "../../../assets/types/addons";
+import { IErrors, IMealMainType } from "../../../assets/types/addons";
 import { IMinOffert, IPrice } from "../../../assets/types/orders";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
@@ -14,6 +14,7 @@ import {
 	removeDrink,
 	removeSecondMeal,
 	setDrink,
+	setError,
 	setSecondMeal,
 	setSize,
 	setSumPrice,
@@ -21,11 +22,11 @@ import {
 import Button from "../../Button";
 import InputCheck from "../../InputCheck";
 import ProductPick from "./ProductPick";
-
-import styles from "./PickProducts.module.scss";
 import AddIcon from "../Offert/plus-svgrepo-com.svg";
 import { addToCart } from "../../../redux/slices/cartSlice";
 import Price from "../../Price";
+
+import styles from "./PickProducts.module.scss";
 
 type IProps = {
 	name: string;
@@ -48,12 +49,48 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 		}
 	};
 
+	const checkErrors = () => {
+		let whereToScroll = "";
+
+		const errors: IErrors = {
+			size: false,
+			secondMeal: false,
+			drink: false,
+		};
+		if (!addons.size) {
+			errors.size = true;
+			whereToScroll = "size";
+		}
+		if (
+			!addons.secondMeal ||
+			(addons.size === "beatest" && addons.pickedSecondMealNumber < 2)
+		) {
+			errors.secondMeal = true;
+			whereToScroll = whereToScroll || "secondMeal";
+		}
+		if (
+			!addons.drink ||
+			(addons.size === "beatest" && addons.pickedDrinkNumber < 2)
+		) {
+			errors.drink = true;
+			whereToScroll = whereToScroll || "drink";
+		}
+		document.getElementById(whereToScroll)!.scrollIntoView(true);
+		dispatch(setError(errors));
+	};
+
 	const onAddToCart = () => {
 		if (
 			addons.type === "zestaw" &&
-			(!addons.drink || !addons.secondMeal || !addons.size)
+			(!addons.drink ||
+				!addons.secondMeal ||
+				!addons.size ||
+				(addons.size === "beatest" &&
+					(addons.pickedDrinkNumber < 2 || addons.pickedSecondMealNumber < 2)))
 		) {
-			alert("Wybierz frytki lub napój lub rozmiar zestawu!");
+			checkErrors();
+			// document.getElementById("modal-root")?.scrollTo(0, 0);
+
 			return;
 		}
 
@@ -119,7 +156,9 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 			{addons.type === "zestaw" && (
 				<>
 					<div className={styles.mealSize}>
-						<h1>Wybierz rozmiar zestawu</h1>
+						<h1 id="size" className={`${addons.errors.size && styles.error}`}>
+							Wybierz rozmiar zestawu
+						</h1>
 						<InputCheck
 							value="BEAT"
 							onClick={() => {
@@ -146,13 +185,15 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 						/>
 					</div>
 					<div className={styles.pickOne}>
-						{(addons.size === "beat" || !addons.size) && (
-							<h1>Frytki lub Sałatka </h1>
-						)}
-						{addons.size === "beater" && <h1>Frytki XL lub Sałatka XL</h1>}
-						{addons.size === "beatest" && (
-							<h1>Frytki lub Sałatka (Wybierz dwa)</h1>
-						)}{" "}
+						<h1
+							id="secondMeal"
+							className={`${addons.errors.secondMeal && styles.error}`}
+						>
+							{(addons.size === "beat" || !addons.size) &&
+								"Frytki lub Sałatka "}
+							{addons.size === "beater" && "Frytki XL lub Sałatka XL"}
+							{addons.size === "beatest" && "Frytki lub Sałatka (Wybierz dwa)"}
+						</h1>
 						<div className={styles.products}>
 							<ProductPick
 								thumbnail={product.src}
@@ -211,11 +252,11 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 						</div>
 					</div>
 					<div className={styles.pickOne}>
-						{(addons.size === "beat" || !addons.size) && (
-							<h1>Wybierz Napój </h1>
-						)}
-						{addons.size === "beater" && <h1>Wybierz Napój XL</h1>}
-						{addons.size === "beatest" && <h1>Wybierz dwa napoje</h1>}
+						<h1 id="drink" className={`${addons.errors.drink && styles.error}`}>
+							{(addons.size === "beat" || !addons.size) && "Wybierz Napój"}
+							{addons.size === "beater" && "Wybierz Napój XL"}
+							{addons.size === "beatest" && "Wybierz dwa napoje"}
+						</h1>
 						<div className={styles.products}>
 							<ProductPick
 								leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}

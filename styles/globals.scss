@@ -9,6 +9,7 @@ body {
 		Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
 		sans-serif;
 	background-color: $color-background;
+	scroll-behavior: smooth;
 }
 
 a {
@@ -29,6 +30,7 @@ a {
 	justify-content: center;
 	overflow-y: scroll;
 	z-index: 10;
+	scroll-behavior: smooth;
 }
 body.modal-open {
 	overflow: hidden;

@@ -9,8 +9,14 @@ export type IAddon = {
 	sumPrice: IPrice;
 	pickedSecondMealNumber: number;
 	pickedDrinkNumber: number;
+	errors: IErrors;
 };
 
+export type IErrors = {
+	size: boolean;
+	drink: boolean;
+	secondMeal: boolean;
+};
 export type IMealSize = "beat" | "beater" | "beatest";
 
 export type IMealType = "zestaw" | "other";

@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
 	IAddon,
 	IDrink,
+	IErrors,
 	IMealSize,
 	IMealType,
 	ISecondMeal,
@@ -17,6 +18,11 @@ const initialState: IAddon = {
 	},
 	pickedSecondMealNumber: 0,
 	pickedDrinkNumber: 0,
+	errors: {
+		size: false,
+		secondMeal: false,
+		drink: false,
+	},
 };
 
 const addonSlice = createSlice({
@@ -102,6 +108,9 @@ const addonSlice = createSlice({
 			if (state.additionalIngredients[index].quantity < 1) return;
 			state.additionalIngredients[index].quantity--;
 		},
+		setError(state, action: PayloadAction<IErrors>) {
+			state.errors = action.payload;
+		},
 	},
 });
 
@@ -119,5 +128,6 @@ export const {
 	setSumPrice,
 	addDrink,
 	removeDrink,
+	setError,
 } = addonSlice.actions;
 export default addonSlice.reducer;

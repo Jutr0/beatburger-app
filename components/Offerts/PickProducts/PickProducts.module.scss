@@ -37,3 +37,16 @@
 	justify-content: center;
 	flex-direction: column;
 }
+.error {
+	&::before,
+	&::after {
+		content: "";
+		width: 10px;
+		height: 10px;
+		background-color: red;
+		display: inline-block;
+		border-radius: 50%;
+		text-transform: uppercase;
+		margin: 4px;
+	}
+}

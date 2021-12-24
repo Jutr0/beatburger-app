@@ -34,6 +34,11 @@
 		border: none;
 		background-color: transparent;
 	}
+	&:disabled {
+		background-color: $color-accent;
+		border: none;
+		cursor: default;
+	}
 }
 
 @media screen and (max-width: 768px) {
