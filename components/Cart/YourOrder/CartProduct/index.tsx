@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import { IMinOffert, IPrice } from "../../../../assets/types/orders";
+import { useAppDispatch } from "../../../../redux/hooks";
+import {
+	decreaseQuantity,
+	increaseQuantity,
+} from "../../../../redux/slices/cartSlice";
 import Price from "../../../Price";
 import QuantityButtons from "../../../QuantityButtons";
 
@@ -19,6 +24,8 @@ function CartProduct({
 	drink,
 	secondMeal,
 }: IProps) {
+	const dispatch = useAppDispatch();
+
 	const [realPrice, setRealPrice] = useState<IPrice>({ full: 0, point: 0 });
 
 	useEffect(() => {
@@ -30,7 +37,7 @@ function CartProduct({
 		tempFull += Math.floor(tempPoint / 100);
 		tempPoint %= 100;
 		setRealPrice({ full: tempFull, point: tempPoint });
-	});
+	}, [quantity, price]);
 
 	return (
 		<div className={styles.container}>
@@ -72,8 +79,12 @@ function CartProduct({
 			</div>
 			<div className={styles.priceContainer}>
 				<QuantityButtons
-					onIncrement={() => {}}
-					onDecrement={() => {}}
+					onIncrement={() => {
+						dispatch(increaseQuantity(id));
+					}}
+					onDecrement={() => {
+						dispatch(decreaseQuantity(id));
+					}}
 					classNameButton={styles.buttons}
 				/>
 				<Price

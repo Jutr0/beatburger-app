@@ -32,11 +32,45 @@ const cartSlice = createSlice({
 				state.sumPrice.point %= 100;
 			}
 		},
-		removeFromCart: (state) => {
-			state.sumPrice.full--;
+		removeFromCart: (state, action: PayloadAction<string>) => {
+			const temp = state.orders.filter((order) => order.id !== action.payload);
+			state.orders = temp;
+		},
+		increaseQuantity: (state, action: PayloadAction<string>) => {
+			state.orders.forEach((step) => {
+				if (step.id === action.payload) {
+					step.quantity!++;
+					const price = step.price as IPrice;
+					state.sumPrice.full += price.full;
+					state.sumPrice.point += price.point;
+					if (state.sumPrice.point >= 100) {
+						state.sumPrice.full++;
+						state.sumPrice.point %= 100;
+					}
+				}
+			});
+		},
+		decreaseQuantity: (state, action: PayloadAction<string>) => {
+			state.orders.forEach((step) => {
+				if (step.id !== action.payload) return;
+				if (step.quantity! <= 1) {
+					const temp = state.orders.filter(
+						(order) => order.id !== action.payload
+					);
+					state.orders = temp;
+				} else step.quantity!--;
+				const price = step.price as IPrice;
+				state.sumPrice.full -= price.full;
+				state.sumPrice.point -= price.point;
+				if (state.sumPrice.point < 0) {
+					state.sumPrice.full--;
+					state.sumPrice.point += 100;
+				}
+			});
 		},
 	},
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, increaseQuantity, decreaseQuantity } =
+	cartSlice.actions;
 export default cartSlice.reducer;

@@ -23,9 +23,12 @@ function Price({
 	return (
 		<div className={`${styles.price} ${className || ""}`} style={style}>
 			<div className={`${styles.full} ${fullStyle || ""}`}>{full}</div>
-			{point > 0 && (
-				<div className={`${styles.point} ${pointStyle || ""}`}>{point}</div>
-			)}
+
+			<div className={`${styles.point} ${pointStyle || ""}`}>
+				{point < 10 && "0"}
+				{point}
+			</div>
+
 			<span className={`${styles.currency} ${currencyStyle || ""}`}>zł</span>
 		</div>
 	);

@@ -146,7 +146,13 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 						/>
 					</div>
 					<div className={styles.pickOne}>
-						<h1>Wybierz frytki lub sałatkę</h1>
+						{(addons.size === "beat" || !addons.size) && (
+							<h1>Frytki lub Sałatka </h1>
+						)}
+						{addons.size === "beater" && <h1>Frytki XL lub Sałatka XL</h1>}
+						{addons.size === "beatest" && (
+							<h1>Frytki lub Sałatka (Wybierz dwa)</h1>
+						)}{" "}
 						<div className={styles.products}>
 							<ProductPick
 								thumbnail={product.src}
@@ -205,7 +211,11 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 						</div>
 					</div>
 					<div className={styles.pickOne}>
-						<h1>Wybierz Napój</h1>
+						{(addons.size === "beat" || !addons.size) && (
+							<h1>Wybierz Napój </h1>
+						)}
+						{addons.size === "beater" && <h1>Wybierz Napój XL</h1>}
+						{addons.size === "beatest" && <h1>Wybierz dwa napoje</h1>}
 						<div className={styles.products}>
 							<ProductPick
 								leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}
