@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import QuantityIndicator from "../../../QuantityIndicator";
 import Image from "next/image";
 
-import styles from "./ProductPick.module.scss";
 import { IMealSize } from "../../../../assets/types/addons";
 import Price from "../../../Price";
 import { IPrice } from "../../../../assets/types/orders";
-import ChangeQuantityButton from "../../../QuantityButtons/ChangeQuantityButton";
 import QuantityButtons from "../../../QuantityButtons";
+
+import styles from "./ProductPick.module.scss";
 
 type IProps = {
 	thumbnail: string;
@@ -21,9 +21,11 @@ type IProps = {
 	leftNumber?: number;
 	size?: IMealSize;
 	price?: IPrice;
+	isSurcharge?: boolean;
 };
 
 function ProductPick({
+	isSurcharge = false,
 	thumbnail,
 	name,
 	maxNumber,
@@ -66,22 +68,17 @@ function ProductPick({
 				<Image src={thumbnail} alt="product" layout="fill" />
 			</div>
 			<h2>{name}</h2>
-
+			{price && price.full > 0 && (
+				<Price
+					{...price}
+					style={{ margin: "14px 0 " }}
+					fullStyle={`${styles.fullPrice} ${isSurcharge && styles.isSurcharge}`}
+					pointStyle={styles.pointPrice}
+					currencyStyle={styles.currency}
+				/>
+			)}
 			{type === "many" && (
 				<>
-					{price && price.full > 0 && (
-						<Price
-							{...price}
-							style={{ margin: "14px 0 " }}
-							fullStyle={styles.fullPrice}
-							pointStyle={styles.pointPrice}
-							currencyStyle={styles.currency}
-						/>
-					)}
-					{/* <div className={styles.buttons}>
-						<ChangeQuantityButton onClick={decrement}>-</ChangeQuantityButton>
-						<ChangeQuantityButton onClick={increment}>+</ChangeQuantityButton>
-					</div> */}
 					<QuantityButtons
 						onIncrement={increment}
 						onDecrement={decrement}

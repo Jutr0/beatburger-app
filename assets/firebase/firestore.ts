@@ -1,6 +1,6 @@
 import { collection, getDocs, getFirestore } from "firebase/firestore";
 import app from ".";
-import { IMealMainType, IMealType } from "../types/addons";
+import { IMealMainType, IMealSize, IMealType } from "../types/addons";
 import { IPrice } from "../types/orders";
 
 const firestore = getFirestore(app);
@@ -27,7 +27,7 @@ export type IApiOffert = {
 	price: IPrice | IPrice[];
 	thumbnail: string;
 	type: IMealType;
-	size?: "XL" | "normal";
+	size?: IMealSize;
 };
 
 const getSections = async () => {

@@ -20,6 +20,7 @@ export type IPrice = {
 };
 
 export type IMinOffert = {
+	size?: string;
 	id: string;
 	name: string;
 	price: IPrice | IPrice[];

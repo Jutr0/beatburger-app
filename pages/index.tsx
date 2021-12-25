@@ -18,6 +18,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setIngredients } from "../redux/slices/ingredientsSlice";
 import { GetServerSideProps } from "next";
+import { setDrinksSection } from "../redux/slices/drinksSlice";
 
 type IProps = {
 	sections: ISection[];
@@ -28,11 +29,22 @@ type IProps = {
 function Home({ sections, offerts, ingredients }: IProps) {
 	const dispatch = useAppDispatch();
 	const ingredientsRedux = useAppSelector((state) => state.ingredients);
+	const drinks = useAppSelector((state) => state.drinks);
 
 	useEffect(() => {
 		if (ingredientsRedux.length !== 0) return;
 		dispatch(setIngredients(ingredients));
 	}, [ingredients, ingredientsRedux.length]);
+
+	useEffect(() => {
+		if (drinks.length !== 0) return;
+		const temp = offerts.find(
+			(step) =>
+				step.sectionId ===
+				sections.find((section) => section.name === "drinks")?.id
+		);
+		dispatch(setDrinksSection(temp!.data));
+	}, [offerts, drinks.length]);
 
 	return (
 		<>

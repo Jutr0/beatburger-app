@@ -49,21 +49,33 @@ function CartProduct({
 				<div className={styles.addonsContainer}>
 					{secondMeal &&
 						Array.isArray(secondMeal) &&
+						secondMeal[0].title !== secondMeal[1].title &&
 						secondMeal.map((step, i) => (
 							<div key={step.name + i} className={styles.addon}>
 								{step.title}
 							</div>
 						))}
+					{secondMeal &&
+						Array.isArray(secondMeal) &&
+						secondMeal[0].title === secondMeal[1].title && (
+							<div className={styles.addon}>2x {secondMeal[0].title}</div>
+						)}
 					{secondMeal && !Array.isArray(secondMeal) && (
 						<div className={styles.addon}>{secondMeal.title}</div>
 					)}
 					{drink &&
 						Array.isArray(drink) &&
+						drink[0].title !== drink[1].title &&
 						drink.map((step, i) => (
 							<div key={step.name + i} className={styles.addon}>
 								{step.title}
 							</div>
 						))}
+					{drink &&
+						Array.isArray(drink) &&
+						drink[0].title === drink[1].title && (
+							<div className={styles.addon}>2x {drink[0].title}</div>
+						)}
 					{drink && !Array.isArray(drink) && (
 						<div className={styles.addon}>{drink.title}</div>
 					)}

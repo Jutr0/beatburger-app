@@ -39,6 +39,7 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 	const dispatch = useAppDispatch();
 	const addons = useAppSelector((state) => state.addons);
 	const ingredients = useAppSelector((state) => state.ingredients);
+	const drinks = useAppSelector((state) => state.drinks);
 
 	const maxPickedSecondMeal = 2;
 	const maxPickedDrinkNumber = 2;
@@ -89,7 +90,6 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 					(addons.pickedDrinkNumber < 2 || addons.pickedSecondMealNumber < 2)))
 		) {
 			checkErrors();
-			// document.getElementById("modal-root")?.scrollTo(0, 0);
 
 			return;
 		}
@@ -101,8 +101,8 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 			additionalProducts: addons.additionalIngredients.filter(
 				(step) => step.quantity > 0
 			),
+			size: addons.size,
 			type: addons.type,
-
 			quantity: 1,
 			id: Date.now().toString(),
 			secondMeal: addons.secondMeal,
@@ -115,7 +115,7 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 	};
 	useEffect(() => {
 		calculateSum();
-	}, [addons.size, addons.additionalIngredients]);
+	}, [addons.size, addons.additionalIngredients, addons.secondMeal]);
 
 	const calculateSum = () => {
 		let full: number = 0;
@@ -145,7 +145,16 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 			full += step.price.full * step.quantity;
 			point += step.price.point * step.quantity;
 		});
-
+		if (Array.isArray(addons.secondMeal)) {
+			addons.secondMeal.forEach((step) => {
+				if (step.name === "sweet potatoes") full += 2;
+			});
+		} else if (
+			addons.secondMeal &&
+			addons.secondMeal.name === "sweet potatoes"
+		) {
+			full += addons.size === "beater" ? 3 : 2;
+		}
 		full += Math.floor(point / 100);
 		point = point % 100;
 
@@ -249,6 +258,43 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 									);
 								}}
 							/>
+							<ProductPick
+								isSurcharge
+								price={{ full: addons.size === "beater" ? 3 : 2, point: 0 }}
+								thumbnail={product.src}
+								isChecked={
+									!Array.isArray(addons.secondMeal) &&
+									addons.secondMeal?.name === "sweet potatoes"
+								}
+								name="Frytki z Batatów"
+								type={addons.size === "beatest" ? "many" : "one"}
+								maxNumber={maxPickedSecondMeal}
+								onClick={() => {
+									onPickOption(setSecondMeal, {
+										name: "sweet potatoes",
+										title: "Frytki z Batatów",
+									});
+								}}
+								leftNumber={maxPickedSecondMeal - addons.pickedSecondMealNumber}
+								onIncrement={() => {
+									dispatch(changeSecondMealNumber(1));
+									dispatch(
+										addSecondMeal({
+											name: "sweet potatoes",
+											title: "Frytki z Batatów",
+										})
+									);
+								}}
+								onDecrement={() => {
+									dispatch(changeSecondMealNumber(-1));
+									dispatch(
+										removeSecondMeal({
+											name: "sweet potatoes",
+											title: "Frytki z Batatów",
+										})
+									);
+								}}
+							/>
 						</div>
 					</div>
 					<div className={styles.pickOne}>
@@ -258,54 +304,40 @@ function PickProducts({ name, price, onClose, mainType }: IProps) {
 							{addons.size === "beatest" && "Wybierz dwa napoje"}
 						</h1>
 						<div className={styles.products}>
-							<ProductPick
-								leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}
-								thumbnail={product.src}
-								isChecked={
-									!Array.isArray(addons.drink) &&
-									addons.drink?.name === "coca-cola"
-								}
-								name="Coca-Cola"
-								maxNumber={maxPickedDrinkNumber}
-								onClick={() => {
-									onPickOption(setDrink, {
-										name: "coca-cola",
-										title: "Coca-Cola",
-									});
-								}}
-								type={addons.size === "beatest" ? "many" : "one"}
-								onIncrement={() => {
-									dispatch(changeDrinkNumber(1));
-									dispatch(addDrink({ name: "coca-cola", title: "Coca-Cola" }));
-								}}
-								onDecrement={() => {
-									dispatch(changeDrinkNumber(-1));
-									dispatch(
-										removeDrink({ name: "coca-cola", title: "Coca-Cola" })
-									);
-								}}
-							/>
-							<ProductPick
-								leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}
-								thumbnail={product.src}
-								isChecked={
-									!Array.isArray(addons.drink) && addons.drink?.name === "fanta"
-								}
-								name="Fanta"
-								type={addons.size === "beatest" ? "many" : "one"}
-								maxNumber={maxPickedDrinkNumber}
-								onClick={() => {
-									onPickOption(setDrink, { name: "fanta", title: "Fanta" });
-								}}
-								onIncrement={() => {
-									dispatch(changeDrinkNumber(1));
-									dispatch(addDrink({ name: "fanta", title: "Fanta" }));
-								}}
-								onDecrement={() => {
-									dispatch(changeDrinkNumber(-1));
-									dispatch(removeDrink({ name: "fanta", title: "Fanta" }));
-								}}
-							/>
+							{drinks.map((drink) => {
+								if (addons.size === "beater" && drink.size !== "beater") return;
+								if (addons.size !== "beater" && drink.size === "beater") return;
+								return (
+									<ProductPick
+										key={drink.id}
+										leftNumber={maxPickedDrinkNumber - addons.pickedDrinkNumber}
+										thumbnail={drink.thumbnail}
+										isChecked={
+											!Array.isArray(addons.drink) &&
+											addons.drink?.name === drink.id
+										}
+										name={drink.name}
+										maxNumber={maxPickedDrinkNumber}
+										onClick={() => {
+											onPickOption(setDrink, {
+												name: drink.id,
+												title: drink.name,
+											});
+										}}
+										type={addons.size === "beatest" ? "many" : "one"}
+										onIncrement={() => {
+											dispatch(changeDrinkNumber(1));
+											dispatch(addDrink({ name: drink.id, title: drink.name }));
+										}}
+										onDecrement={() => {
+											dispatch(changeDrinkNumber(-1));
+											dispatch(
+												removeDrink({ name: drink.id, title: drink.name })
+											);
+										}}
+									/>
+								);
+							})}
 						</div>
 					</div>
 				</>
