@@ -1,0 +1,24 @@
+@import "../../../styles/colors";
+
+.input {
+	background-color: $color-card;
+	width: 100%;
+	padding: 16px;
+	height: 56px;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	font-size: 20px;
+	margin: 8px 0;
+	border: none;
+	color: $color-text-primary;
+}
+.label {
+	color: $color-text-primary;
+	font-size: 18px;
+	font-weight: 200;
+}
+.error {
+	color: rgb(243, 52, 52);
+	transform: translateY(-6px);
+}

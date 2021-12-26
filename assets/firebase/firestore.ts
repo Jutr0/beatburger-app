@@ -1,4 +1,10 @@
-import { collection, getDocs, getFirestore } from "firebase/firestore";
+import {
+	collection,
+	getDocs,
+	getFirestore,
+	orderBy,
+	query,
+} from "firebase/firestore";
 import app from ".";
 import { IMealMainType, IMealSize, IMealType } from "../types/addons";
 import { IPrice } from "../types/orders";
@@ -32,7 +38,7 @@ export type IApiOffert = {
 
 const getSections = async () => {
 	const sections: ISection[] | undefined = await getDocs(
-		collection(firestore, "menu")
+		query(collection(firestore, "menu"), orderBy("order"))
 	).then((sections) => {
 		let data: ISection[] = [];
 		sections.docs.forEach((doc) => {

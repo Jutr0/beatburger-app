@@ -42,8 +42,8 @@ function Home({ sections, offerts, ingredients }: IProps) {
 			(step) =>
 				step.sectionId ===
 				sections.find((section) => section.name === "drinks")?.id
-		);
-		dispatch(setDrinksSection(temp!.data));
+		) || { data: [] };
+		dispatch(setDrinksSection(temp.data));
 	}, [offerts, drinks.length]);
 
 	return (

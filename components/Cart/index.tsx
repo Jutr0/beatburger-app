@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 import { useAppSelector } from "../../redux/hooks";
 import Price from "../Price";
@@ -12,6 +13,7 @@ import Button from "../Button";
 
 function Cart() {
 	const cart = useAppSelector((state) => state.cart);
+	const router = useRouter();
 	return (
 		<>
 			<Hidden sm xs>
@@ -36,6 +38,9 @@ function Cart() {
 					<Button
 						disabled={cart.sumPrice.full <= 0}
 						className={styles.orderButton}
+						onClick={() => {
+							router.push("/payment");
+						}}
 					>
 						Zamawiam
 					</Button>
