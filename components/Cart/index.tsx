@@ -49,7 +49,12 @@ function Cart() {
 
 			<Visible sm xs>
 				{cart.sumPrice.full > 0 && (
-					<div className={styles.container}>
+					<div
+						className={styles.container}
+						onClick={() => {
+							router.push("/payment");
+						}}
+					>
 						<CartIcon />
 						<span className={styles.title}>Twoje Zamówienie</span>
 						<Price {...cart.sumPrice} />

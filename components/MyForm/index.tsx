@@ -1,8 +1,10 @@
 import { Form, Formik } from "formik";
 import React from "react";
-import { Container, Row } from "react-grid-system";
+import { Col, Container, Row } from "react-grid-system";
 import InputText from "./InputText";
 import * as Yup from "yup";
+import InputRadioBtn from "./InputRadioBtn";
+import Button from "../Button";
 
 import styles from "./MyForm.module.scss";
 
@@ -21,6 +23,8 @@ const initialValues = {
 		phone: "",
 		email: "",
 	},
+	purchaseType: "online",
+	deliveryType: "delivery",
 };
 const onSubmit = (values: typeof initialValues) => {
 	console.log(values);
@@ -66,10 +70,104 @@ function MyForm() {
 		>
 			{(props) => {
 				return (
-					<Form>
+					<Form id="paymentForm">
 						<Container component={"section"}>
 							<Row gutterWidth={8} justify="center">
-								<h1 className={styles.title}>address</h1>
+								<h1 className={styles.title}>płatność</h1>
+							</Row>
+							<InputRadioBtn
+								name="purchaseType"
+								value="online"
+								colSizes={{
+									xs: 12,
+									sm: 12,
+									md: 10,
+									xl: 10,
+									xxl: 10,
+								}}
+								isChecked={props.values.purchaseType === "online"}
+							>
+								Płatność online
+							</InputRadioBtn>
+							<InputRadioBtn
+								name="purchaseType"
+								value="card"
+								colSizes={{
+									xs: 12,
+									sm: 12,
+									md: 10,
+									xl: 10,
+									xxl: 10,
+								}}
+								isChecked={props.values.purchaseType === "card"}
+							>
+								Karta (przy odbiorze)
+							</InputRadioBtn>
+							<InputRadioBtn
+								name="purchaseType"
+								value="cash"
+								colSizes={{
+									xs: 12,
+									sm: 12,
+									md: 10,
+									xl: 10,
+									xxl: 10,
+								}}
+								isChecked={props.values.purchaseType === "cash"}
+							>
+								Gotówka
+							</InputRadioBtn>
+						</Container>
+						<Container component={"section"}>
+							<Row gutterWidth={8} justify="center">
+								<h1 className={styles.title}>sposób dostarczenia</h1>
+							</Row>
+							<InputRadioBtn
+								name="deliveryType"
+								value="delivery"
+								colSizes={{
+									xs: 12,
+									sm: 12,
+									md: 10,
+									xl: 10,
+									xxl: 10,
+								}}
+								isChecked={props.values.deliveryType === "delivery"}
+							>
+								Dostawa
+							</InputRadioBtn>
+							<InputRadioBtn
+								name="deliveryType"
+								value="pickup"
+								colSizes={{
+									xs: 12,
+									sm: 12,
+									md: 10,
+									xl: 10,
+									xxl: 10,
+								}}
+								isChecked={props.values.deliveryType === "pickup"}
+							>
+								Odbiór osobisty
+							</InputRadioBtn>
+							<InputRadioBtn
+								name="deliveryType"
+								value="inRestaurant"
+								colSizes={{
+									xs: 12,
+									sm: 12,
+									md: 10,
+									xl: 10,
+									xxl: 10,
+								}}
+								isChecked={props.values.deliveryType === "inRestaurant"}
+							>
+								Zjem na miejscu
+							</InputRadioBtn>
+						</Container>
+						<Container component={"section"}>
+							<Row gutterWidth={8} justify="center">
+								<h1 className={styles.title}>adres</h1>
 							</Row>
 							<Row gutterWidth={8} justify="center">
 								<InputText
@@ -133,7 +231,7 @@ function MyForm() {
 						</Container>
 						<Container component={"section"}>
 							<Row gutterWidth={8} justify="center">
-								<h1 className={styles.title}>contact</h1>
+								<h1 className={styles.title}>kontakt</h1>
 							</Row>
 							<Row gutterWidth={8} justify="center">
 								<InputText
@@ -195,7 +293,17 @@ function MyForm() {
 									required
 								/>
 							</Row>
-							<button type="submit">Submit</button>
+							<Row gutterWidth={8} justify="end">
+								<Col xs={12} sm={12} md={8} xl={6} xxl={6}>
+									<Button
+										id="purchaseSubmitBtn"
+										htmlType="submit"
+										className={styles.submitBtn}
+									>
+										Zamawiam i płacę
+									</Button>
+								</Col>
+							</Row>
 						</Container>
 					</Form>
 				);

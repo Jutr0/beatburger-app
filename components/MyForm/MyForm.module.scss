@@ -3,6 +3,11 @@
 .title {
 	color: $color-text-primary;
 	text-transform: uppercase;
-	font-size: 32px;
+	font-size: 28px;
 	font-weight: 500;
+}
+.submitBtn {
+	width: 100%;
+	height: 56px;
+	margin: 24px 0;
 }

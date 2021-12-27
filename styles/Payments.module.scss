@@ -1,0 +1,27 @@
+@import "../styles/colors";
+
+.submitBtn {
+	width: 100%;
+	margin-top: 24px;
+}
+.orderContainer {
+	background-color: $color-card;
+	padding: 24px;
+	border-radius: 4px;
+	width: 100%;
+}
+.containersContainer {
+	display: flex;
+	flex-direction: column;
+	& > section {
+		width: 100%;
+	}
+}
+@media screen and (min-width: 768px) {
+	.containersContainer {
+		flex-direction: row;
+		section:first-child {
+			order: 2;
+		}
+	}
+}
